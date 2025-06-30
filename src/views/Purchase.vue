@@ -11,7 +11,7 @@ const { tasks } = storeToRefs(taskStore);
 <template>
   <div class="container px-3 sm:px-4 lg:px-8 md:my-5 my-2">
     <div class="w-full">
-      <h3 class="text-2xl font-semibold text-primary mb-4">Đơn mua</h3>
+      <h2 class="text-2xl font-semibold text-primary mb-4">Đơn mua</h2>
       <DataTable :data="tasks" :columns="columns" />
     </div>
   </div>

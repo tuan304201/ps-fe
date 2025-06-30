@@ -1,7 +1,7 @@
 <template>
   <div class="container px-3 sm:px-4 lg:px-8 md:my-5 my-2">
     <div class="w-full">
-      <h3 class="text-2xl text-center font-semibold text-primary mb-4">Hệ thống cửa hàng</h3>
+      <h2 class="text-2xl text-center font-semibold text-primary mb-4">Hệ thống cửa hàng</h2>
     </div>
 
     <div class="block md:grid grid-cols-2 gap-4">

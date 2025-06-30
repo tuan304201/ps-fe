@@ -10,6 +10,7 @@
         <div class="grid grid-cols-2 gap-4 lg:grid-cols-6 md:grid-cols-3">
           <CardProduct
             v-for="itemInList in item.listProduct"
+            :id="item.id"
             :title="itemInList.title"
             :price="itemInList.price"
             :oldPrice="itemInList.oldPrice"

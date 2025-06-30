@@ -4,7 +4,7 @@
       <Category v-if="isDesktop" ref="desktopCategoryFilter" @filter-changed="updateProducts" />
 
       <div class="w-full">
-        <h3 class="text-2xl font-semibold text-primary">Danh sách sản phẩm</h3>
+        <h2 class="text-2xl font-semibold text-primary">Danh sách sản phẩm</h2>
 
         <div class="product-section flex md:flex-row flex-col min-h-16 justify-between">
           <div class="mb-4 order-2 md:order-1">

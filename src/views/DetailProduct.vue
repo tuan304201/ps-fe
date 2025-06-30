@@ -53,7 +53,7 @@
 
       <!-- Product Details Section -->
       <div class="w-full md:w-3/5">
-        <h1 class="text-2xl font-bold">Dịch vụ tắm, cạo và cắt tỉ lông cho Chó VIP</h1>
+        <h2 class="text-2xl font-bold">Dịch vụ tắm, cạo và cắt tỉ lông cho Chó VIP</h2>
 
         <div class="flex items-center text-sm mt-2">
           <span class="text-gray-500">Số lượng</span>

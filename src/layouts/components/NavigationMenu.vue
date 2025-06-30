@@ -11,40 +11,55 @@
         <SheetContent>
           <SheetTitle class="hidden"></SheetTitle>
           <SheetDescription class="hidden"></SheetDescription>
-
           <Sidebar />
         </SheetContent>
       </Sheet>
 
       <div class="flex items-center">
-        <NavigationMenu>
-          <NavigationMenuList class="flex justify-between">
+        <NavigationMenu :delayDuration="200">
+          <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger>Mèo</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul class="grid w-[1000px] gap-x-20 gap-y-10 p-4 md:w-[600px] md:grid-cols-3 lg:w-[1000px]">
-                  <li v-for="item in catMenu" :key="item.id">
-                    <NavigationMenuLink as-child>
-                      <RouterLink
-                        to="/product"
-                        class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div class="text-md font-medium leading-none">{{ item.title }}</div>
-                      </RouterLink>
-                      <div class="ml-2">
-                        <ul v-for="itemSub in item.children">
-                          <li :key="itemSub.id">
-                            <RouterLink
-                              to="/product"
-                              class="block select-none space-y-1 rounded-md p-3 leading-none no-underline hover:text-primary text-sm text-gray-700"
-                              >{{ itemSub.title }}</RouterLink
-                            >
-                          </li>
+                <div class="grid grid-cols-4 gap-4 p-6 w-[1000px]">
+                  <div class="col-span-3">
+                    <div class="grid grid-cols-3 gap-6">
+                      <div v-for="item in catMenu" :key="item.id" class="flex flex-col space-y-2">
+                        <h3 class="text-lg font-bold text-primary">{{ item.title }}</h3>
+                        <ul class="flex flex-col space-y-1">
+                          <ListItem
+                            v-for="subItem in item.children"
+                            :key="subItem.title"
+                            :title="subItem.title"
+                            :href="subItem.href"
+                          >
+                            {{ subItem.description }}
+                          </ListItem>
                         </ul>
                       </div>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
+                    </div>
+                  </div>
+
+                  <div class="col-span-1">
+                    <RouterLink
+                      to="/product/1"
+                      class="group block h-full w-full select-none overflow-hidden rounded-lg bg-gradient-to-b from-rose-500 to-amber-500 no-underline outline-none transition-transform duration-300 ease-in-out hover:scale-105 focus:shadow-md"
+                    >
+                      <div class="flex h-full flex-col items-center justify-center p-3 text-center">
+                        <img
+                          src="https://bizweb.dktcdn.net/100/527/383/products/1-9e788942233b4875828c57a723bb8a19.png"
+                          class="w-full object-contain transition-transform duration-300 group-hover:scale-110 rounded-md"
+                          alt="Sản phẩm nổi bật"
+                        />
+
+                        <div class="mt-4 text-lg font-bold text-white">Dịch Vụ Spa Trọn Gói</div>
+                        <p class="mt-1 text-sm leading-tight text-white/90">
+                          Thư giãn & làm đẹp toàn diện cho boss của bạn.
+                        </p>
+                      </div>
+                    </RouterLink>
+                  </div>
+                </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -71,25 +86,7 @@
         </RouterLink>
       </div>
 
-      <div class="flex items-center">
-        <RouterLink to="/store-system">
-          <div
-            class="group inline-flex h-10 w-max items-center justify-center px-4 py-2 gap-1 text-md text-white font-semibold transition-colors hover:text-[#FFE31A]"
-          >
-            <Icon icon="material-symbols-light:storefront-outline-rounded" class="size-6" />
-            <span class="text-md">Hệ thống cửa hàng</span>
-          </div>
-        </RouterLink>
-
-        <RouterLink to="/">
-          <div
-            class="group inline-flex h-10 w-max items-center justify-center px-4 py-2 gap-1 text-md text-white font-semibold transition-colors hover:text-[#FFE31A]"
-          >
-            <Icon icon="material-symbols-light:phone-in-talk-rounded" class="size-6" />
-            <span class="text-md">Hotline: 0987654321</span>
-          </div>
-        </RouterLink>
-      </div>
+      <div class="flex items-center"></div>
     </div>
   </div>
 </template>
@@ -102,11 +99,12 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "./Sidebar.vue";
+import ListItem from "./ListItem.vue"; // Import component mới
+
 export default {
   components: {
     NavigationMenu,
@@ -118,10 +116,10 @@ export default {
     Sheet,
     SheetContent,
     SheetDescription,
-    SheetHeader,
     SheetTitle,
     SheetTrigger,
     Sidebar,
+    ListItem, // Đăng ký component mới
   },
   data() {
     return {
@@ -129,69 +127,35 @@ export default {
         {
           id: 1,
           title: "Thức ăn cho mèo",
-          href: "thuc-an-cho-meo",
           children: [
-            { id: 1, title: "Thức ăn hạt", href: "thuc-an-hat" },
-            { id: 2, title: "Thức ăn ướt", href: "thuc-an-uot" },
-            { id: 4, title: "Thức ăn điều trị bệnh", href: "thuc-an-dieu-tri-benh" },
-            { id: 5, title: "Bánh thưởng mèo", href: "banh-thuong-meo" },
+            { title: "Thức ăn hạt", href: "/product", description: "Dinh dưỡng, giòn rụm, tốt cho răng miệng." },
+            { title: "Pate & Thức ăn ướt", href: "/product", description: "Bổ sung nước, kích thích vị giác." },
+            { title: "Thức ăn điều trị", href: "/product", description: "Hỗ trợ điều trị các bệnh lý cụ thể." },
           ],
         },
         {
           id: 2,
-          title: "Phụ kiện - đồ chơi",
-          href: "phu-kien-do-choi",
+          title: "Vệ sinh & Chăm sóc",
           children: [
-            { id: 1, title: "Đồ chơi", href: "do-choi" },
-            { id: 2, title: "Thời trang - Quần áo", href: "thoi-trang-quan-ao" },
-            { id: 3, title: "Vòng cổ - Dây dắt", href: "vong-co-day-dat" },
+            { title: "Cát & Khay vệ sinh", href: "/product", description: "Khử mùi hiệu quả, giữ nhà sạch sẽ." },
+            { title: "Sữa tắm & Khử mùi", href: "/product", description: "Làm sạch, dưỡng lông, hương thơm dịu nhẹ." },
+            { title: "Dụng cụ grooming", href: "/product", description: "Lược chải, kềm cắt móng, dụng cụ lấy lông." },
           ],
         },
         {
           id: 3,
-          title: "Vận chuyển - chuồng",
-          href: "van-chuyen-chuong",
+          title: "Đồ dùng & Phụ kiện",
           children: [
-            { id: 1, title: "Chuồng - nhà nệm", href: "chuong-nha-nem" },
-            { id: 2, title: "Vận chuyển", href: "van-chuyen" },
-          ],
-        },
-        {
-          id: 4,
-          title: "Vệ sinh",
-          href: "ve-sinh",
-          children: [
-            { id: 1, title: "Cát mèo", href: "cat-meo" },
-            { id: 2, title: "Chăm sóc răng miệng", href: "cham-soc-rang-mieng" },
-            { id: 4, title: "Sữa tắm", href: "sua-tam" },
-            { id: 5, title: "Xịt khử mùi", href: "xit-khu-mui" },
-          ],
-        },
-        {
-          id: 5,
-          title: "Chăm sóc sức khoẻ",
-          href: "cham-soc-suc-khoe",
-          children: [
-            { id: 1, title: "Sữa và bình bú cho mèo", href: "sua-va-binh-bu-cho-meo" },
-            { id: 2, title: "Vitamin và thực phẩm bổ sung", href: "vitamin-va-thuc-pham-bo-sung" },
-          ],
-        },
-        {
-          id: 6,
-          title: "Bánh thưởng",
-          href: "banh-thuong",
-          children: [
-            { id: 1, title: "Bánh thưởng mềm", href: "banh-thuong-mem" },
-            { id: 2, title: "Súp thưởng", href: "sup-thuong" },
-            { id: 4, title: "Bánh quy", href: "banh-quy" },
-            { id: 5, title: "Thịt sấy khô", href: "thit-say-kho" },
+            { title: "Nhà, nệm, chuồng", href: "/product", description: "Không gian nghỉ ngơi êm ái, an toàn." },
+            { title: "Đồ chơi & Cây cào", href: "/product", description: "Giải trí, giảm stress, bảo vệ nội thất." },
+            { title: "Vòng cổ & Dây dắt", href: "/product", description: "An toàn và phong cách cho mỗi chuyến đi." },
           ],
         },
       ],
     };
   },
-  methods: {
-    navigationMenuTriggerStyle,
-  },
+  // methods: {
+  //   navigationMenuTriggerStyle,
+  // },
 };
 </script>

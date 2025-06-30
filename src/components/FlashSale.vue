@@ -1,66 +1,107 @@
 <template>
-  <div class="bg-flashsale rounded p-6">
-    <div class="text-white flex justify-between mb-6">
-      <div class="text-3xl font-bold flex">
-        <h1 class="relative">
-          FLASH SALE
-          <img
-            src="@/assets/images/coll_title_ic.webp"
-            alt="coll_title_ic"
-            class="absolute -top-4 -right-10 hidden md:block"
-          />
-        </h1>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="countdown flex gap-2 items-center">
-          <div class="countdown-item">
-            <span>{{ countdown.hours }}</span>
+  <div class="overflow-x-hidden bg-slate-50 rounded">
+    <section class="relative bg-gradient-to-r from-rose-500 to-primary py-5 text-white md:py-5">
+      <div
+        class="pointer-events-none absolute inset-0 bg-[url('@/assets/images/coll_title_ic.webp')] bg-repeat opacity-5"
+      ></div>
+      <div class="absolute inset-0 bg-black/20"></div>
+
+      <div class="container relative text-center">
+        <h1 class="text-4xl font-extrabold tracking-tight md:text-6xl">FLASH SALE</h1>
+        <p class="mx-auto mt-2 text-lg text-white/90">
+          Cơ hội săn deal hot nhất trong ngày! Đừng bỏ lỡ những ưu đãi cực lớn sẽ kết thúc sau...
+        </p>
+
+        <div class="mx-auto mt-2 flex max-w-2xl items-center justify-center space-x-2 md:space-x-4">
+          <div class="flex flex-col items-center">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-lg bg-white/20 text-3xl font-bold backdrop-blur-sm md:h-24 md:w-24 md:text-5xl"
+            >
+              <transition name="slide-up" mode="out-in">
+                <span :key="timeLeft.days">{{ formatTime(timeLeft.days) }}</span>
+              </transition>
+            </div>
+            <span class="mt-2 text-xs font-semibold uppercase tracking-wider md:text-sm">Ngày</span>
           </div>
-          <div class="countdown-item">
-            <span>{{ countdown.minutes }}</span>
+          <div class="text-3xl font-bold md:text-5xl">:</div>
+
+          <div class="flex flex-col items-center">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-lg bg-white/20 text-3xl font-bold backdrop-blur-sm md:h-24 md:w-24 md:text-5xl"
+            >
+              <transition name="slide-up" mode="out-in">
+                <span :key="timeLeft.hours">{{ formatTime(timeLeft.hours) }}</span>
+              </transition>
+            </div>
+            <span class="mt-2 text-xs font-semibold uppercase tracking-wider md:text-sm">Giờ</span>
           </div>
-          <div class="countdown-item">
-            <span>{{ countdown.seconds }}</span>
+          <div class="text-3xl font-bold md:text-5xl">:</div>
+
+          <div class="flex flex-col items-center">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-lg bg-white/20 text-3xl font-bold backdrop-blur-sm md:h-24 md:w-24 md:text-5xl"
+            >
+              <transition name="slide-up" mode="out-in">
+                <span :key="timeLeft.minutes">{{ formatTime(timeLeft.minutes) }}</span>
+              </transition>
+            </div>
+            <span class="mt-2 text-xs font-semibold uppercase tracking-wider md:text-sm">Phút</span>
+          </div>
+          <div class="text-3xl font-bold md:text-5xl">:</div>
+
+          <div class="flex flex-col items-center">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-lg bg-white/20 text-3xl font-bold backdrop-blur-sm md:h-24 md:w-24 md:text-5xl"
+            >
+              <transition name="slide-up" mode="out-in">
+                <span :key="timeLeft.seconds">{{ formatTime(timeLeft.seconds) }}</span>
+              </transition>
+            </div>
+            <span class="mt-2 text-xs font-semibold uppercase tracking-wider md:text-sm">Giây</span>
           </div>
         </div>
       </div>
-    </div>
-
-    <Carousel
-      class="relative w-full"
-      :opts="{
-        align: 'center',
-      }"
-    >
-      <CarouselContent>
-        <CarouselItem
-          class="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 cursor-default"
-          v-for="item in listProduct"
-          :key="item.id"
+      <div class="container px-4 py-2 md:py-4">
+        <Carousel
+          class="relative w-full"
+          :opts="{
+            align: 'center',
+            loop: true,
+          }"
         >
-          <CardProduct
-            :title="item.title"
-            :price="item.price"
-            :oldPrice="item.oldPrice"
-            :discount="item.discount"
-            :mainImage="item.mainImage"
-            :hoverImage="item.hoverImage"
-            :isHover="item.isHover"
-          />
-        </CarouselItem>
-      </CarouselContent>
-      <CarouselPrevious class="carousel-control absolute hidden" />
-      <CarouselNext class="carousel-control absolute hidden" />
-    </Carousel>
+          <CarouselContent>
+            <CarouselItem
+              class="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 cursor-default text-black"
+              v-for="item in listProduct"
+              :key="item.id"
+            >
+              <CardProduct
+                :id="item.id"
+                :title="item.title"
+                :price="item.price"
+                :oldPrice="item.oldPrice"
+                :discount="item.discount"
+                :mainImage="item.mainImage"
+                :hoverImage="item.hoverImage"
+                :isHover="item.isHover"
+              />
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious class="carousel-control absolute hidden" />
+          <CarouselNext class="carousel-control absolute hidden" />
+        </Carousel>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import CardProduct from "./CardProduct.vue";
+import CardProduct from "@/components/CardProduct.vue";
 import { listProduct } from "@/utils/FakeData";
+
 export default {
-  name: "FlashSale",
+  name: "FlashSalePage", // Đổi tên để tránh trùng với component FlashSale cũ
   components: {
     CardProduct,
     Carousel,
@@ -71,55 +112,62 @@ export default {
   },
   data() {
     return {
-      countdown: {
-        hours: "00",
-        minutes: "00",
-        seconds: "00",
-      },
-      saleEndTime: new Date().getTime() + 12 * 60 * 60 * 1000,
+      // Dữ liệu cho Carousel sản phẩm
       listProduct,
+
+      // Dữ liệu cho Countdown Timer
+      targetDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000), // VD: 1 ngày
+      timeLeft: {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      },
+      timerInterval: null,
     };
   },
-  mounted() {
-    this.startCountdown();
-  },
   methods: {
-    startCountdown() {
-      setInterval(() => {
-        const now = new Date().getTime();
-        const distance = this.saleEndTime - now;
-        if (distance <= 0) {
-          this.countdown = { hours: "00", minutes: "00", seconds: "00" };
-        } else {
-          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          this.countdown = {
-            hours: String(hours).padStart(2, "0"),
-            minutes: String(minutes).padStart(2, "0"),
-            seconds: String(seconds).padStart(2, "0"),
-          };
-        }
-      }, 1000);
+    updateCountdown() {
+      const now = new Date();
+      const difference = this.targetDate.getTime() - now.getTime();
+
+      if (difference <= 0) {
+        clearInterval(this.timerInterval);
+        this.timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+        return;
+      }
+
+      this.timeLeft.days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      this.timeLeft.hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      this.timeLeft.minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      this.timeLeft.seconds = Math.floor((difference % (1000 * 60)) / 1000);
     },
+    formatTime(time) {
+      return time < 10 ? "0" + time : time;
+    },
+  },
+  mounted() {
+    this.updateCountdown();
+    this.timerInterval = setInterval(this.updateCountdown, 1000);
+  },
+  beforeUnmount() {
+    clearInterval(this.timerInterval);
   },
 };
 </script>
 
 <style scoped>
-.countdown-item {
-  background-color: #facc15;
-  color: #000;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 45px;
+/* Hiệu ứng chuyển cảnh cho số đếm ngược */
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-
-.countdown-item span {
-  font-size: 1.2rem;
-  font-weight: bold;
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 </style>

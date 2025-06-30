@@ -1,7 +1,7 @@
 <template>
   <div class="container px-3 sm:px-4 lg:px-8 pt-7 wrapper__cart">
     <div class="flex justify-center items-center flex-col h-full" v-if="cartItems.length === 0">
-      <img src="@/assets/images/cart_empty.png" alt="" />
+      <img src="@/assets/images/cart_empty.png" alt="Giỏ hàng trống" />
       <h2 class="font-normal text-neutral-500/80 mt-4 text-xl">Giỏ hàng của bạn hiện đang trống</h2>
       <button class="bg-primary px-8 py-2 text-white font-medium rounded-lg mt-4">
         <router-link to="/product">Mua sắm ngay</router-link>
@@ -30,7 +30,7 @@
           <TableCell class="font-medium flex items-start gap-3 w-max">
             <img
               src="https://bizweb.dktcdn.net/thumb/large/100/527/383/products/upload-baa5e183543848d3948bd1c337ea1fff.jpg?v=1727669771437"
-              alt="product image"
+              :alt="item.name"
               class="w-16 h-16 object-cover"
             />
             <div class="mt-1 whitespace-nowrap">
@@ -63,6 +63,7 @@
             <button
               class="bg-red-500/80 text-white px-1 py-1 rounded hover:bg-red-600 font-semibold"
               @click="removeItem(index)"
+              :aria-label="`Xóa sản phẩm ${item.name}`"
             >
               <Icon icon="material-symbols-light:delete-rounded" class="size-6" />
             </button>

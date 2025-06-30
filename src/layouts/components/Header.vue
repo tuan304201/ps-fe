@@ -75,11 +75,11 @@
                   </li>
                   <RouterLink to="/purchase">
                     <li
-                    class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
-                  >
-                    <Icon icon="material-symbols-light:box-outline-rounded" class="size-6" />
-                    <span>Đơn mua</span>
-                  </li>
+                      class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
+                    >
+                      <Icon icon="material-symbols-light:box-outline-rounded" class="size-6" />
+                      <span>Đơn mua</span>
+                    </li>
                   </RouterLink>
                   <li
                     class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
@@ -92,11 +92,11 @@
             </Popover>
             <RouterLink to="/cart">
               <div class="flex items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-100">
-                <div class="relative">
+                <div ref="cartIcon" class="relative" :class="{ shake: cartStore.isCartShaking }">
                   <Icon icon="material-symbols-light:shopping-cart-rounded" class="size-8" />
-                  <span class="cart-count flex items-center justify-center rounded-full absolute font-semibold"
-                    >99+</span
-                  >
+                  <span class="cart-count flex items-center justify-center rounded-full absolute font-semibold">
+                    99+
+                  </span>
                 </div>
                 <span class="text-sm hidden md:block">Giỏ hàng</span>
               </div>
@@ -112,6 +112,7 @@
 <script>
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useCartStore } from "@/stores/cartStore";
 import NavigationMenu from "./NavigationMenu.vue";
 import Sidebar from "./Sidebar.vue";
 
@@ -130,8 +131,10 @@ export default {
     PopoverTrigger,
   },
   name: "Header",
-  data() {
-    return {};
+  setup() {
+    // Khởi tạo store để truy cập trạng thái isCartShaking
+    const cartStore = useCartStore();
+    return { cartStore };
   },
 };
 </script>
@@ -160,5 +163,28 @@ export default {
 
 .shadow__header {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+.shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 </style>

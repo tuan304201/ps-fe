@@ -8,16 +8,22 @@
     </div>
   </section>
   <div class="container px-3 sm:px-4 lg:px-8">
-    <section>
-      <div class="container lg:flex grid grid-cols-2 gap-y-4 justify-between place-items-center py-10 px-0">
+    <section class="py-2 my-4">
+      <div class="container grid grid-cols-2 gap-4 px-4 md:grid-cols-4 md:gap-6">
         <div
-          class="flex items-center gap-2 cursor-default min-w-[150px] sm:min-w-[230px] text-sm sm:text-lg"
           v-for="item in policy"
+          :key="item.title"
+          class="group flex flex-col items-center rounded-xl border border-transparent bg-white p-4 text-center shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-2 hover:border-primary/30 hover:shadow-xl"
         >
-          <Icon :icon="item.icon" class="size-9 text-neutral-600" />
+          <Icon
+            :icon="item.icon"
+            class="mb-2 size-12 text-primary transition-transform duration-300 group-hover:scale-110"
+          />
           <div>
-            <div class="font-semibold">{{ item.title }}</div>
-            <div class="text-sm text-neutral-600 hidden sm:block">{{ item.description }}</div>
+            <div class="text-md font-bold text-gray-800">{{ item.title }}</div>
+            <div class="mt-1 text-sm text-neutral-600 hidden sm:block">
+              {{ item.description }}
+            </div>
           </div>
         </div>
       </div>
@@ -37,14 +43,14 @@
 
     <section>
       <div class="text-3xl font-bold flex justify-center mt-10">
-        <h1 class="relative text-primary">
+        <h2 class="relative text-primary">
           DINH DƯỠNG CHO MÈO
           <img
             src="@/assets/images/coll_title_ic.webp"
             alt="coll_title_ic"
             class="absolute -top-4 -right-10 hidden md:block"
           />
-        </h1>
+        </h2>
       </div>
 
       <SectionCat :data="itemsFoodCat" />
@@ -79,14 +85,14 @@
 
     <section>
       <div class="text-3xl font-bold flex justify-center mt-10">
-        <h1 class="relative text-primary">
+        <h2 class="relative text-primary">
           Dịch vụ của Boss
           <img
             src="@/assets/images/coll_title_ic.webp"
             alt="coll_title_ic"
             class="absolute -top-4 -right-10 hidden md:block"
           />
-        </h1>
+        </h2>
       </div>
 
       <SectionCat :data="servicesOfBoss" />
@@ -126,28 +132,28 @@
 
     <section>
       <div class="text-3xl font-bold flex justify-center mt-20 mb-5">
-        <h1 class="relative text-primary">
+        <h2 class="relative text-primary">
           Sản phẩm mới
           <img
             src="@/assets/images/coll_title_ic.webp"
             alt="coll_title_ic"
             class="absolute -top-4 -right-10 hidden md:block"
           />
-        </h1>
+        </h2>
       </div>
       <NewProduct :data="dataNewProduct" />
     </section>
 
     <section>
       <div class="text-3xl font-bold flex justify-center mt-20 mb-5">
-        <h1 class="relative text-primary">
+        <h2 class="relative text-primary">
           Sổ tay chăm Boss
           <img
             src="@/assets/images/coll_title_ic.webp"
             alt="coll_title_ic"
             class="absolute -top-4 -right-10 hidden md:block"
           />
-        </h1>
+        </h2>
       </div>
 
       <div class="grid lg:grid-cols-4 grid-cols-2 gap-4">
@@ -159,14 +165,14 @@
 
     <section>
       <div class="text-3xl font-bold flex justify-center mt-20 mb-6">
-        <h1 class="relative text-primary">
+        <h2 class="relative text-primary">
           Nhãn hiệu tin dùng
           <img
             src="@/assets/images/coll_title_ic.webp"
             alt="coll_title_ic"
             class="absolute -top-4 -right-10 hidden md:block"
           />
-        </h1>
+        </h2>
       </div>
       <div class="marquee-container">
         <div class="marquee-content">

@@ -2,6 +2,7 @@
   <div class="grid grid-cols-2 gap-4 lg:grid-cols-6 md:grid-cols-3">
     <CardProduct
       v-for="item in data"
+      :id="item.id"
       :title="item.title"
       :price="item.price"
       :oldPrice="item.oldPrice"

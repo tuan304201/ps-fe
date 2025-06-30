@@ -2,7 +2,7 @@
   <div class="container px-3 sm:px-4 lg:px-8 md:my-5 my-2">
     <div class="w-full">
       <div class="flex justify-between mb-4">
-        <h3 class="text-2xl font-semibold text-primary">Dịch vụ chăm Pets</h3>
+        <h2 class="text-2xl font-semibold text-primary">Dịch vụ chăm Pets</h2>
 
         <div class="w-36">
           <Select>
@@ -22,6 +22,7 @@
           <div class="grid grid-cols-2 gap-4 lg:grid-cols-5 md:grid-cols-3">
             <CardProduct
               v-for="item in servicesOfBoss[0].listProduct"
+              :id="item.id"
               :title="item.title"
               :price="item.price"
               :oldPrice="item.oldPrice"

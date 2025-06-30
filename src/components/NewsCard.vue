@@ -1,7 +1,7 @@
 <template>
-  <div class="card__news">
+  <router-link :to="`/tin-tuc/${id || 'default'}`" class="card__news block">
     <div class="overflow-hidden rounded-tl-md rounded-tr-md">
-      <img :src="image" alt="image_news_post" class="img__news" />
+      <img :src="image" :alt="title" class="img__news" />
     </div>
     <div class="px-4 py-4">
       <h2 class="font-semibold text-md line-clamp-2 title__news">{{ title }}</h2>
@@ -20,12 +20,17 @@
         Xem chi tiết
       </button>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
 export default {
   props: {
+    id: {
+      type: [String, Number],
+      required: false, // Thay đổi từ true thành false
+      default: null,
+    },
     image: {
       type: String,
       required: true,

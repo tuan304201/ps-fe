@@ -106,12 +106,22 @@ module.exports = {
             height: 0,
           },
         },
+        "slide-down": {
+          from: { transform: "translateY(-10px)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" },
+        },
+        "slide-up": {
+          from: { transform: "translateY(0)", opacity: "1" },
+          to: { transform: "translateY(-10px)", opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "collapsible-down": "collapsible-down 0.2s ease-in-out",
         "collapsible-up": "collapsible-up 0.2s ease-in-out",
+        "slide-down": "slide-down 0.2s ease-out",
+        "slide-up": "slide-up 0.2s ease-out",
       },
       zIndex: {
         9999: "9999",

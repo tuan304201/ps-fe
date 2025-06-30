@@ -133,7 +133,7 @@
           <h3 class="font-semibold mb-2">PHƯƠNG THỨC THANH TOÁN</h3>
           <img
             src="https://bizweb.dktcdn.net/thumb/grande/100/527/383/themes/964940/assets/footer-trustbadge.png?1730347951357"
-            alt="method_payment"
+            alt="Các phương thức thanh toán được chấp nhận"
           />
         </div>
       </div>
