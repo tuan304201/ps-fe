@@ -1,0 +1,382 @@
+[
+  {
+    "id": "ORD001",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Thức ăn cho chó Thức ăn cho chóThức ăn cho chóThức ăn cho chóThức ăn cho chóThức ăn cho chóThức ăn cho chó ăn cho chóThức ăn cho chó",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 2,
+    "unitPrice": 150000,
+    "status": "received",
+    "totalPrice": 300000,
+    "discount": 50000,
+    "shippingFee": 30000,
+    "paymentMethod": "Chuyển khoản",
+    "address": {
+      "fullName": "Nguyễn Văn A",
+      "phoneNumber": "0901234567",
+      "detail": "123 Đường ABC, Quận 1, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD002",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Cát vệ sinh cho mèo",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 100000,
+    "status": "delivery",
+    "totalPrice": 100000,
+    "discount": 10000,
+    "shippingFee": 25000,
+    "paymentMethod": "Tiền mặt",
+    "address": {
+      "fullName": "Trần Thị B",
+      "phoneNumber": "0912345678",
+      "detail": "456 Đường XYZ, Quận 7, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD003",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Bát ăn cho chó",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 50000,
+    "status": "processing",
+    "totalPrice": 50000,
+    "discount": 5000,
+    "shippingFee": 20000,
+    "paymentMethod": "Ví điện tử",
+    "address": {
+      "fullName": "Lê Văn C",
+      "phoneNumber": "0923456789",
+      "detail": "789 Đường LMN, Quận 3, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD004",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Dây dắt chó",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 120000,
+    "status": "received",
+    "totalPrice": 120000,
+    "discount": 10000,
+    "shippingFee": 15000,
+    "paymentMethod": "Chuyển khoản",
+    "address": {
+      "fullName": "Phạm Văn D",
+      "phoneNumber": "0934567890",
+      "detail": "321 Đường QRS, Quận 5, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD005",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Sữa tắm cho mèo",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 2,
+    "unitPrice": 90000,
+    "status": "delivery",
+    "totalPrice": 180000,
+    "discount": 20000,
+    "shippingFee": 25000,
+    "paymentMethod": "Tiền mặt",
+    "address": {
+      "fullName": "Đinh Thị E",
+      "phoneNumber": "0945678901",
+      "detail": "654 Đường TUV, Quận 10, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD006",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Giường ngủ cho chó",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 300000,
+    "status": "processing",
+    "totalPrice": 300000,
+    "discount": 30000,
+    "shippingFee": 40000,
+    "paymentMethod": "Ví điện tử",
+    "address": {
+      "fullName": "Ngô Văn F",
+      "phoneNumber": "0956789012",
+      "detail": "987 Đường WXY, Quận 2, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD007",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Vòng cổ cho mèo",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 70000,
+    "status": "received",
+    "totalPrice": 70000,
+    "discount": 5000,
+    "shippingFee": 15000,
+    "paymentMethod": "Chuyển khoản",
+    "address": {
+      "fullName": "Hoàng Văn G",
+      "phoneNumber": "0967890123",
+      "detail": "123 Đường ABC, Quận 4, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD008",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Cát vệ sinh không bụi",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 3,
+    "unitPrice": 120000,
+    "status": "delivery",
+    "totalPrice": 360000,
+    "discount": 30000,
+    "shippingFee": 30000,
+    "paymentMethod": "Tiền mặt",
+    "address": {
+      "fullName": "Nguyễn Thị H",
+      "phoneNumber": "0978901234",
+      "detail": "456 Đường XYZ, Quận 6, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD009",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Thức ăn hạt cao cấp cho chó",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 2,
+    "unitPrice": 250000,
+    "status": "processing",
+    "totalPrice": 500000,
+    "discount": 50000,
+    "shippingFee": 35000,
+    "paymentMethod": "Ví điện tử",
+    "address": {
+      "fullName": "Trần Văn I",
+      "phoneNumber": "0989012345",
+      "detail": "789 Đường LMN, Quận 8, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD010",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Sữa tắm khử mùi cho chó",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 85000,
+    "status": "canceled",
+    "totalPrice": 85000,
+    "discount": 0,
+    "shippingFee": 20000,
+    "paymentMethod": "Chuyển khoản",
+    "address": {
+      "fullName": "Lê Thị K",
+      "phoneNumber": "0990123456",
+      "detail": "321 Đường QRS, Quận 9, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD011",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Lồng vận chuyển cho mèo",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 180000,
+    "status": "delivery",
+    "totalPrice": 180000,
+    "discount": 20000,
+    "shippingFee": 25000,
+    "paymentMethod": "Tiền mặt",
+    "address": {
+      "fullName": "Phạm Văn M",
+      "phoneNumber": "0902345678",
+      "detail": "654 Đường TUV, Quận 11, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD012",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Bộ cắt móng cho thú cưng",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 45000,
+    "status": "received",
+    "totalPrice": 45000,
+    "discount": 5000,
+    "shippingFee": 10000,
+    "paymentMethod": "Ví điện tử",
+    "address": {
+      "fullName": "Ngô Thị N",
+      "phoneNumber": "0913456789",
+      "detail": "987 Đường WXY, Quận 12, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD013",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Balo phi hành gia cho mèo",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 350000,
+    "status": "processing",
+    "totalPrice": 350000,
+    "discount": 50000,
+    "shippingFee": 40000,
+    "paymentMethod": "Chuyển khoản",
+    "address": {
+      "fullName": "Đỗ Văn P",
+      "phoneNumber": "0924567890",
+      "detail": "222 Đường GHJ, Quận Bình Thạnh, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD014",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Xịt khử mùi lông thú",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 2,
+    "unitPrice": 60000,
+    "status": "canceled",
+    "totalPrice": 120000,
+    "discount": 10000,
+    "shippingFee": 20000,
+    "paymentMethod": "Tiền mặt",
+    "address": {
+      "fullName": "Bùi Văn Q",
+      "phoneNumber": "0935678901",
+      "detail": "333 Đường IJK, Quận Tân Bình, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD015",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Cây cào móng cho mèo",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 200000,
+    "status": "canceled",
+    "totalPrice": 200000,
+    "discount": 15000,
+    "shippingFee": 25000,
+    "paymentMethod": "Ví điện tử",
+    "address": {
+      "fullName": "Nguyễn Thị R",
+      "phoneNumber": "0946789012",
+      "detail": "444 Đường OPQ, Quận Gò Vấp, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD016",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Bộ quần áo cho chó mùa đông",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 130000,
+    "status": "processing",
+    "totalPrice": 130000,
+    "discount": 10000,
+    "shippingFee": 15000,
+    "paymentMethod": "Chuyển khoản",
+    "address": {
+      "fullName": "Trương Văn S",
+      "phoneNumber": "0957890123",
+      "detail": "555 Đường RST, Quận Phú Nhuận, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD017",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Găng tay chải lông cho thú cưng",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 2,
+    "unitPrice": 75000,
+    "status": "received",
+    "totalPrice": 150000,
+    "discount": 10000,
+    "shippingFee": 20000,
+    "paymentMethod": "Tiền mặt",
+    "address": {
+      "fullName": "Lý Thị T",
+      "phoneNumber": "0968901234",
+      "detail": "666 Đường UVW, Quận Thủ Đức, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD018",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Thực phẩm bổ sung cho chó con",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 220000,
+    "status": "delivery",
+    "totalPrice": 220000,
+    "discount": 20000,
+    "shippingFee": 25000,
+    "paymentMethod": "Ví điện tử",
+    "address": {
+      "fullName": "Phan Văn U",
+      "phoneNumber": "0979012345",
+      "detail": "777 Đường XYZ, Quận Bình Tân, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD019",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Đệm ngủ cho mèo",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 1,
+    "unitPrice": 280000,
+    "status": "processing",
+    "totalPrice": 280000,
+    "discount": 25000,
+    "shippingFee": 30000,
+    "paymentMethod": "Chuyển khoản",
+    "address": {
+      "fullName": "Hồ Văn V",
+      "phoneNumber": "0980123456",
+      "detail": "888 Đường ABC, Quận 1, TP.HCM"
+    }
+  },
+  {
+    "id": "ORD020",
+    "classification": "Phân loại",
+    "manufacturer": "Nhà sản xuất",
+    "productName": "Đồ chơi bóng cho chó",
+    "image": "https://bizweb.dktcdn.net/100/527/383/products/upload-455d50698ab249d28edfd5115e19cc9b.jpg?v=1727669813190",
+    "quantity": 3,
+    "unitPrice": 55000,
+    "status": "received",
+    "totalPrice": 165000,
+    "discount": 15000,
+    "shippingFee": 20000,
+    "paymentMethod": "Tiền mặt",
+    "address": {
+      "fullName": "Đặng Thị X",
+      "phoneNumber": "0991234567",
+      "detail": "999 Đường DEF, Quận 2, TP.HCM"
+    }
+  }
+]
