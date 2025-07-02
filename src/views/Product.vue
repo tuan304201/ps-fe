@@ -76,6 +76,18 @@
         </div>
       </div>
     </div>
+
+    <Dialog v-model="showDeleteDialog">
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Bạn có chắc chắn muốn xóa sản phẩm này?</DialogTitle>
+        </DialogHeader>
+        <DialogFooter>
+          <Button @click="deleteProductConfirmed" variant="destructive">Xóa</Button>
+          <Button @click="() => (showDeleteDialog = false)">Hủy</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   </div>
 </template>
 
@@ -92,8 +104,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 // import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { dataAllProduct } from "@/utils/FakeData";
+import { getAllProducts } from "@/api/productApi";
 import CardProduct from "@/components/CardProduct.vue";
+import { useToast } from "@/components/ui/toast/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { ref } from "vue";
+
 export default {
   components: {
     Category,
@@ -106,57 +122,53 @@ export default {
     SelectTrigger,
     SelectValue,
     Sheet,
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
   },
-  data() {
-    return {
-      dataAllProduct,
-      filters: {},
-      filteredProducts: [],
-      selectedFilters: [],
-      sortBy: [
-        { id: 1, title: "Mặc định", value: "mac_dinh" },
-        { id: 2, title: "Tên A → Z", value: "ten_tang_dan" },
-        { id: 3, title: "Tên Z → A", value: "ten_giam_dan" },
-        { id: 4, title: "Giá tăng dần", value: "gia_tang_dan" },
-        { id: 5, title: "Giá giảm dần", value: "gia_giam_dan" },
-      ],
-      isDesktop: window.innerWidth >= 768,
-    };
-  },
-  methods: {
-    updateProducts(filters) {
-      this.filters = filters;
+  setup() {
+    const { toast } = useToast();
+    const showDeleteDialog = ref(false);
+    const productToDelete = ref(null);
+    const dataAllProduct = ref([]);
+    const filteredProducts = ref([]);
+    const selectedFilters = ref([]);
+    const sortBy = [
+      { id: 1, title: "Mặc định", value: "mac_dinh" },
+      { id: 2, title: "Tên A → Z", value: "ten_tang_dan" },
+      { id: 3, title: "Tên Z → A", value: "ten_giam_dan" },
+      { id: 4, title: "Giá tăng dần", value: "gia_tang_dan" },
+      { id: 5, title: "Giá giảm dần", value: "gia_giam_dan" },
+    ];
+    const isDesktop = ref(window.innerWidth >= 768);
+    const filters = ref({});
 
-      this.selectedFilters = [];
-
+    function updateProducts(filters) {
+      selectedFilters.value = [];
       filters.tags.forEach((tag) => {
-        this.selectedFilters.push({ type: "tags", value: tag, label: `${tag}` });
+        selectedFilters.value.push({ type: "tags", value: tag, label: `${tag}` });
       });
-
       filters.brands.forEach((brand) => {
-        this.selectedFilters.push({ type: "brands", value: brand, label: `${brand}` });
+        selectedFilters.value.push({ type: "brands", value: brand, label: `${brand}` });
       });
-
       filters.types.forEach((type) => {
-        this.selectedFilters.push({ type: "types", value: type, label: `${type}` });
+        selectedFilters.value.push({ type: "types", value: type, label: `${type}` });
       });
-
       if (filters.priceRange) {
-        this.selectedFilters.push({
+        selectedFilters.value.push({
           type: "priceRange",
           value: filters.priceRange,
           label: `Khoảng giá: ${filters.priceRange}`,
         });
       }
-
-      this.filteredProducts = this.dataAllProduct.filter((product) => {
+      filteredProducts.value = dataAllProduct.value.filter((product) => {
         const noFilters =
           !filters.tags.length && !filters.brands.length && !filters.types.length && !filters.priceRange;
-
         if (noFilters) {
           return true;
         }
-
         const matchTags = !filters.tags.length || filters.tags.some((tag) => product.tags.includes(tag));
         const matchBrands = !filters.brands.length || filters.brands.some((brand) => product.brands.includes(brand));
         const matchTypes = !filters.types.length || filters.types.some((type) => product.types.includes(type));
@@ -168,58 +180,97 @@ export default {
           (filters.priceRange === "Trên 500k" && product.price > 500000);
         return matchTags && matchBrands && matchTypes && matchPrice;
       });
-    },
+    }
 
-    removeFilter(filter) {
+    function removeFilter(filter) {
       const categoryFilter = this.$refs.desktopCategoryFilter || this.$refs.mobileCategoryFilter;
-
       if (!categoryFilter) return;
-
       switch (filter.type) {
         case "tags":
-          this.filters.tags = this.filters.tags.filter((tag) => tag !== filter.value);
+          filters.value.tags = filters.value.tags.filter((tag) => tag !== filter.value);
           break;
         case "brands":
-          this.filters.brands = this.filters.brands.filter((brand) => brand !== filter.value);
+          filters.value.brands = filters.value.brands.filter((brand) => brand !== filter.value);
           break;
         case "types":
-          this.filters.types = this.filters.types.filter((type) => type !== filter.value);
+          filters.value.types = filters.value.types.filter((type) => type !== filter.value);
           break;
         case "priceRange":
-          this.filters.priceRange = "";
+          filters.value.priceRange = "";
           categoryFilter.resetPriceRange();
           break;
       }
+      categoryFilter.syncFilters(filters.value);
+      updateProducts(filters.value);
+    }
 
-      categoryFilter.syncFilters(this.filters);
-      this.updateProducts(this.filters);
-    },
-
-    clearFilters() {
+    function clearFilters() {
       const categoryFilter = this.$refs.desktopCategoryFilter || this.$refs.mobileCategoryFilter;
-
       if (!categoryFilter) return;
-
-      this.filters = {
+      filters.value = {
         tags: [],
         brands: [],
         types: [],
         priceRange: "",
       };
-      categoryFilter.syncFilters(this.filters);
-      this.updateProducts(this.filters);
-    },
+      categoryFilter.syncFilters(filters.value);
+      updateProducts(filters.value);
+    }
 
-    updateIsDesktop() {
-      this.isDesktop = window.innerWidth >= 768;
-    },
+    function updateIsDesktop() {
+      isDesktop.value = window.innerWidth >= 768;
+    }
 
-    openSheet() {
+    function openSheet() {
       this.$refs.sheet.openSheet();
-    },
+    }
+
+    function confirmDeleteProduct(product) {
+      productToDelete.value = product;
+      showDeleteDialog.value = true;
+    }
+
+    async function deleteProductConfirmed() {
+      try {
+        await deleteProduct(productToDelete.value.id);
+        toast({ title: "Xóa sản phẩm thành công!", variant: "success" });
+        const res = await getAllProducts();
+        dataAllProduct.value = res.data;
+        filteredProducts.value = res.data;
+      } catch (e) {
+        toast({ title: "Lỗi xóa sản phẩm!", description: "Không thể xóa sản phẩm.", variant: "destructive" });
+      } finally {
+        showDeleteDialog.value = false;
+        productToDelete.value = null;
+      }
+    }
+
+    return {
+      dataAllProduct,
+      filteredProducts,
+      selectedFilters,
+      sortBy,
+      isDesktop,
+      filters,
+      showDeleteDialog,
+      productToDelete,
+      confirmDeleteProduct,
+      deleteProductConfirmed,
+      updateProducts,
+      removeFilter,
+      clearFilters,
+      updateIsDesktop,
+      openSheet,
+    };
   },
-  created() {
-    this.filteredProducts = this.dataAllProduct;
+  async created() {
+    try {
+      const res = await getAllProducts();
+      this.dataAllProduct = res.data;
+      this.filteredProducts = res.data;
+    } catch (e) {
+      // Xử lý lỗi nếu cần
+    }
     this.updateIsDesktop();
     window.addEventListener("resize", this.updateIsDesktop);
   },

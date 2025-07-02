@@ -28,11 +28,16 @@
         </div>
       </div>
     </section>
-    <section class="pb-10">
-      <DiscountCard />
-    </section>
     <section>
       <FlashSale />
+    </section>
+    <section class="pt-10">
+      <div class="mb-8 text-center md:mb-12">
+        <h2 class="relative text-3xl font-bold text-gray-800">Mã giảm giá độc quyền</h2>
+
+        <p class="mx-auto mt-2 max-w-xl text-gray-600">Sử dụng ngay những mã coupon giá trị này trước khi hết hạn!</p>
+      </div>
+      <DiscountCard />
     </section>
 
     <img

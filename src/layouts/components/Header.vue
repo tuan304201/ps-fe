@@ -41,61 +41,70 @@
           </div>
 
           <div class="header__icon__wrapper flex gap-2 items-center">
-            <!-- <RouterLink to="/login">
-              <div class="flex justify-between items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-100">
-                <Icon
-                  icon="material-symbols-light:person"
-                  class="text-gray-700 size-8 border-[1px] border-gray-300 rounded"
-                />
-                <div class="hidden md:block">
-                  <div class="text-xs text-gray-400">Tài khoản</div>
-                  <div class="text-md text-black font-semibold">Đăng nhập</div>
-                </div>
-              </div>
-            </RouterLink> -->
-            <Popover>
-              <PopoverTrigger>
+            <template v-if="isLoggedIn">
+              <Popover>
+                <PopoverTrigger>
+                  <div class="flex justify-between items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-100">
+                    <Icon
+                      icon="material-symbols-light:person"
+                      class="text-gray-700 size-8 border-[1px] border-gray-300 rounded"
+                    />
+                    <div class="hidden md:block">
+                      <div class="text-md text-black font-semibold max-w-[10rem] truncate">{{ userName }}</div>
+                    </div>
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent align="left">
+                  <ul class="flex flex-col justify-start py-2">
+                    <RouterLink
+                      to="/account"
+                      class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
+                    >
+                      <Icon icon="material-symbols-light:account-box-outline" class="size-6" />
+                      <span>Tài khoản</span>
+                    </RouterLink>
+                    <RouterLink to="/purchase">
+                      <li
+                        class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
+                      >
+                        <Icon icon="material-symbols-light:box-outline-rounded" class="size-6" />
+                        <span>Đơn mua</span>
+                      </li>
+                    </RouterLink>
+                    <li
+                      @click="handleLogout"
+                      class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
+                    >
+                      <Icon icon="uit:signout" class="size-6" />
+                      <span>Đăng xuất</span>
+                    </li>
+                  </ul>
+                </PopoverContent>
+              </Popover>
+            </template>
+            <template v-else>
+              <RouterLink to="/login">
                 <div class="flex justify-between items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-100">
                   <Icon
                     icon="material-symbols-light:person"
                     class="text-gray-700 size-8 border-[1px] border-gray-300 rounded"
                   />
                   <div class="hidden md:block">
-                    <div class="text-md text-black font-semibold max-w-[10rem] truncate">Phạm Tuấn Anh</div>
+                    <div class="text-xs text-gray-400">Tài khoản</div>
+                    <div class="text-md text-black font-semibold">Đăng nhập</div>
                   </div>
                 </div>
-              </PopoverTrigger>
-              <PopoverContent align="left">
-                <ul class="flex flex-col justify-start py-2">
-                  <li
-                    class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
-                  >
-                    <Icon icon="material-symbols-light:account-box-outline" class="size-6" />
-                    <span>Tài khoản</span>
-                  </li>
-                  <RouterLink to="/purchase">
-                    <li
-                      class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
-                    >
-                      <Icon icon="material-symbols-light:box-outline-rounded" class="size-6" />
-                      <span>Đơn mua</span>
-                    </li>
-                  </RouterLink>
-                  <li
-                    class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
-                  >
-                    <Icon icon="uit:signout" class="size-6" />
-                    <span>Đăng xuất</span>
-                  </li>
-                </ul>
-              </PopoverContent>
-            </Popover>
+              </RouterLink>
+            </template>
             <RouterLink to="/cart">
               <div class="flex items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-100">
-                <div ref="cartIcon" class="relative" :class="{ shake: cartStore.isCartShaking }">
+                <div ref="cartIconRef" class="relative" :class="{ shake: cartStore.isCartShaking }">
                   <Icon icon="material-symbols-light:shopping-cart-rounded" class="size-8" />
-                  <span class="cart-count flex items-center justify-center rounded-full absolute font-semibold">
-                    99+
+                  <span
+                    v-if="cartStore.cartCount > 0"
+                    class="cart-count flex items-center justify-center rounded-full absolute font-semibold"
+                  >
+                    {{ cartStore.cartCount > 99 ? "99+" : cartStore.cartCount }}
                   </span>
                 </div>
                 <span class="text-sm hidden md:block">Giỏ hàng</span>
@@ -110,31 +119,80 @@
 </template>
 
 <script>
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ref, onMounted, nextTick, watch } from "vue";
 import { useCartStore } from "@/stores/cartStore";
+import { Icon } from "@iconify/vue";
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import NavigationMenu from "./NavigationMenu.vue";
 import Sidebar from "./Sidebar.vue";
-
+import { useRouter } from "vue-router";
 export default {
   components: {
     NavigationMenu,
     Sheet,
     SheetContent,
     SheetDescription,
-    SheetHeader,
     SheetTitle,
     SheetTrigger,
     Sidebar,
     Popover,
     PopoverContent,
     PopoverTrigger,
+    Icon,
   },
   name: "Header",
   setup() {
-    // Khởi tạo store để truy cập trạng thái isCartShaking
+    const router = useRouter();
     const cartStore = useCartStore();
-    return { cartStore };
+    const cartIconRef = ref(null);
+    const userName = ref("");
+    const isLoggedIn = ref(false);
+
+    function handleLogout() {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userName");
+      isLoggedIn.value = false;
+      userName.value = "";
+      router.push("/login");
+    }
+
+    function checkLogin() {
+      const token = localStorage.getItem("accessToken");
+      const name = localStorage.getItem("userName");
+      isLoggedIn.value = !!token;
+      userName.value = name || "";
+    }
+
+    onMounted(() => {
+      nextTick(() => {
+        if (cartIconRef.value) {
+          const rect = cartIconRef.value.getBoundingClientRect();
+          cartStore.setCartIconPosition({
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+          });
+        }
+      });
+      checkLogin();
+      window.addEventListener("storage", checkLogin);
+      if (isLoggedIn.value) {
+        cartStore.fetchCart();
+      }
+    });
+
+    watch(isLoggedIn, (val) => {
+      if (val) cartStore.fetchCart();
+      else cartStore.cartItems = [];
+    });
+
+    return {
+      cartStore,
+      cartIconRef,
+      handleLogout,
+      userName,
+      isLoggedIn,
+    };
   },
 };
 </script>

@@ -145,6 +145,23 @@ const router = createRouter({
         description: "Xem lại lịch sử mua hàng và trạng thái đơn hàng của bạn tại Pet Shop.",
       },
     },
+    {
+      path: "/account",
+      name: "account",
+      component: () => import("@/views/Account.vue"),
+      meta: {
+        layout: "default",
+        breadcrumb: "Tài khoản",
+        title: "Tài khoản - Pet Shop",
+        description: "Quản lý, xem và chỉnh sửa thông tin tài khoản cá nhân tại Pet Shop.",
+      },
+    },
+    {
+      path: "/verify-otp",
+      name: "verify-otp",
+      component: () => import("@/views/VerifyOtpPage.vue"),
+      meta: { layout: "default", title: "Xác thực OTP" },
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -165,6 +182,33 @@ router.afterEach((to, from) => {
         "Pet Shop - Cung cấp thức ăn, phụ kiện, đồ chơi và các dịch vụ chăm sóc thú cưng uy tín, chất lượng.",
     );
   }
+});
+
+// Middleware bảo vệ route
+router.beforeEach((to, from, next) => {
+  const publicPages = [
+    "/login",
+    "/register",
+    "/forgot-password",
+    "/verify-otp",
+    "/",
+    "/tin-tuc",
+    "/tin-tuc/:id",
+    "/product",
+    "/product/:id",
+    "/store-system",
+    "/dich-vu-cham-pets",
+    "/flash-sale-1-khung-gio",
+  ];
+  const authRequired = !publicPages.includes(to.path);
+  const token = localStorage.getItem("accessToken");
+  if (authRequired && !token) {
+    return next("/login");
+  }
+  if ((to.path === "/login" || to.path === "/register") && token) {
+    return next("/");
+  }
+  next();
 });
 
 export default router;

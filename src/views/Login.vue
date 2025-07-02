@@ -1,10 +1,12 @@
 <template>
-  <div class="container px-3 sm:px-4 lg:px-8 md:my-5 my-2">
+  <div class="container px-3 sm:px-4 lg:px-8 md:my-5 my-2 py-8">
     <div class="w-full flex flex-col justify-center items-center">
       <h2 class="text-3xl text-primary font-bold">Đăng nhập tài khoản</h2>
       <h4 class="my-2">
         Bạn chưa có tài khoản? Đăng ký
-        <span class="underline text-primary"><router-link to="/register">tại đây</router-link></span>
+        <span class="underline text-primary">
+          <router-link to="/register">tại đây</router-link>
+        </span>
       </h4>
     </div>
 
@@ -21,6 +23,7 @@
           />
           <span v-if="errors.email" class="text-red-500 text-xs">{{ errors.email }}</span>
         </div>
+
         <div class="mb-4">
           <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
           <input
@@ -32,6 +35,7 @@
           />
           <span v-if="errors.password" class="text-red-500 text-xs">{{ errors.password }}</span>
         </div>
+
         <div class="flex justify-between items-center">
           <div class="flex items-center">
             <input
@@ -43,17 +47,22 @@
             <label for="rememberMe" class="ml-2 whitespace-nowrap text-gray-600">Ghi nhớ mật khẩu</label>
           </div>
 
-          <div class="flex items-center justify-between">
-            <router-link to="/forgot-password" class="text-gray-600 hover:text-primary transition-all"
-              >Quên mật khẩu?</router-link
-            >
-          </div>
+          <router-link to="/forgot-password" class="text-gray-600 hover:text-primary transition-all">
+            Quên mật khẩu?
+          </router-link>
         </div>
+
+        <div v-if="errors.general" class="text-red-500 text-sm text-center mt-3">
+          {{ errors.general }}
+        </div>
+
         <div class="w-full flex items-center justify-center">
           <button
             type="submit"
-            class="mt-4 px-4 w-1/3 py-2 text-sm font-medium text-white bg-primary border border-transparent rounded-md hover:bg-primary-dark focus:outline-none focus:ring-primary focus:border-primary"
+            class="mt-4 px-4 w-1/3 py-2 text-sm font-medium text-white bg-primary border border-transparent rounded-md hover:bg-primary-dark focus:outline-none focus:ring-primary focus:border-primary flex items-center justify-center"
+            :disabled="loading"
           >
+            <span v-if="loading" class="loader mr-2"></span>
             Đăng nhập
           </button>
         </div>
@@ -62,74 +71,103 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
+<script setup>
+import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
+import api from "@/lib/api";
+import { useToast } from "@/components/ui/toast/use-toast";
 
-export default {
-  name: "Login",
-  data() {
-    return {
-      email: "",
-      password: "",
-      rememberMe: false,
-      errors: {},
-    };
-  },
-  methods: {
-    validateInputs() {
-      this.errors = {};
-      let isValid = true;
+const router = useRouter();
+const email = ref("");
+const password = ref("");
+const rememberMe = ref(false);
+const errors = ref({});
+const loading = ref(false);
+const { toast } = useToast();
 
-      if (!this.email) {
-        this.errors.email = "Email không được để trống.";
-        isValid = false;
-      } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.email)) {
-        this.errors.email = "Email không hợp lệ.";
-        isValid = false;
+watch(email, () => {
+  errors.value.email = null;
+});
+
+watch(password, () => {
+  errors.value.password = null;
+});
+
+const validateInputs = () => {
+  errors.value = {};
+  let isValid = true;
+
+  if (!email.value) {
+    errors.value.email = "Email không được để trống.";
+    isValid = false;
+  } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email.value)) {
+    errors.value.email = "Email không hợp lệ.";
+    isValid = false;
+  }
+
+  if (!password.value) {
+    errors.value.password = "Mật khẩu không được để trống.";
+    isValid = false;
+  } else if (password.value.length < 6) {
+    errors.value.password = "Mật khẩu phải dài ít nhất 6 ký tự.";
+    isValid = false;
+  }
+
+  return isValid;
+};
+
+const handleLogin = async () => {
+  if (!validateInputs()) return;
+  loading.value = true;
+  try {
+    const response = await api.post("/auth/login", {
+      email: email.value,
+      password: password.value,
+      rememberMe: rememberMe.value,
+    });
+    if (response.data.accessToken) {
+      localStorage.setItem("accessToken", response.data.accessToken);
+      if (response.data.user && response.data.user.name) {
+        localStorage.setItem("userName", response.data.user.name);
+        window.dispatchEvent(new Event("storage"));
       }
-
-      if (!this.password) {
-        this.errors.password = "Mật khẩu không được để trống.";
-        isValid = false;
-      } else if (this.password.length < 6) {
-        this.errors.password = "Mật khẩu phải dài ít nhất 6 ký tự.";
-        isValid = false;
-      }
-
-      return isValid;
-    },
-
-    async handleLogin() {
-      if (!this.validateInputs()) {
-        return;
-      }
-
-      try {
-        const response = await axios.post("/api/login", {
-          email: this.email,
-          password: this.password,
-          rememberMe: this.rememberMe,
-        });
-
-        if (response.data.success) {
-          this.$router.push("/");
-        } else {
-          this.errors.general = response.data.message || "Đăng nhập thất bại.";
-        }
-      } catch (error) {
-        this.errors.general = error.response?.data?.message || "Có lỗi xảy ra khi đăng nhập.";
-      }
-    },
-  },
-
-  watch: {
-    email() {
-      this.errors.email = null;
-    },
-    password() {
-      this.errors.password = null;
-    },
-  },
+      toast({ title: "Đăng nhập thành công!", description: "Chào mừng bạn quay lại Pet Shop." });
+      router.push("/");
+    } else if (
+      response.data.message?.toLowerCase().includes("xác thực") ||
+      response.data.message?.toLowerCase().includes("otp")
+    ) {
+      toast({ title: "Tài khoản chưa xác thực!", description: "Vui lòng xác thực OTP để tiếp tục." });
+      router.push({ name: "verify-otp", query: { email: email.value, autoResend: true } });
+    } else {
+      toast({
+        title: "Đăng nhập thất bại!",
+        description: response.data.message || "Đăng nhập thất bại.",
+        variant: "destructive",
+      });
+    }
+  } catch (error) {
+    const message = error.response?.data?.message?.toLowerCase() || "";
+    const status = error.response?.status;
+    if (
+      message.includes("xác thực") ||
+      message.includes("otp") ||
+      message.includes("quyền truy cập") ||
+      status === 401 ||
+      status === 403
+    ) {
+      toast({ title: "Tài khoản chưa xác thực!", description: "Vui lòng xác thực OTP để tiếp tục." });
+      router.push({ name: "verify-otp", query: { email: email.value, autoResend: true } });
+    } else {
+      toast({
+        title: "Lỗi đăng nhập!",
+        description: error.response?.data?.message || "Có lỗi xảy ra khi đăng nhập.",
+        variant: "destructive",
+      });
+    }
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 
@@ -183,5 +221,23 @@ input[type="checkbox"]:checked + label:after {
   justify-content: center;
   font-size: 14px;
   color: white;
+}
+
+.loader {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

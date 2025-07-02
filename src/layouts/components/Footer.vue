@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-[#f6f6f6] pt-10 pb-12 mt-10">
+  <footer class="bg-[#f6f6f6] pt-10 pb-12 mt-10 border-t-8 border-primary">
     <div
       class="container px-3 sm:px-4 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-start justify-between gap-5 md:gap-10"
     >
@@ -147,4 +147,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.footer-sticky {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 100;
+}
+</style>

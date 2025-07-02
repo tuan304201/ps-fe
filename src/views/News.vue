@@ -18,11 +18,23 @@
           </div>
         </div>
 
-        <div v-else>
-          <p>Không có sản phẩm nào</p>
+        <div v-else class="flex min-h-[50vh] flex-col items-center justify-center text-center">
+          <p>Không có bài viết nào</p>
         </div>
       </div>
     </div>
+
+    <Dialog v-model="showDeleteDialog">
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Bạn có chắc chắn muốn xóa bài viết này?</DialogTitle>
+        </DialogHeader>
+        <DialogFooter>
+          <Button @click="deleteArticleConfirmed" variant="destructive">Xóa</Button>
+          <Button @click="() => (showDeleteDialog = false)">Hủy</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   </div>
 </template>
 
@@ -38,8 +50,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/toast/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
-import { dataPosts } from "@/utils/FakeData";
+import { getAllArticles } from "@/api/articleApi";
 import NewsCard from "@/components/NewsCard.vue";
 
 export default {
@@ -54,10 +69,16 @@ export default {
     SelectTrigger,
     SelectValue,
     Sheet,
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+    Button,
   },
   data() {
     return {
-      dataPosts: this.processDataPosts(dataPosts),
+      dataPosts: [],
       sortBy: [
         { id: 1, title: "Mặc định", value: "mac_dinh" },
         { id: 2, title: "Tên A → Z", value: "ten_tang_dan" },
@@ -66,6 +87,8 @@ export default {
         { id: 5, title: "Giá giảm dần", value: "gia_giam_dan" },
       ],
       isDesktop: window.innerWidth >= 768,
+      showDeleteDialog: false,
+      articleToDelete: null,
     };
   },
   methods: {
@@ -75,8 +98,31 @@ export default {
         id: post.id || index + 1,
       }));
     },
+    confirmDeleteArticle(article) {
+      this.articleToDelete = article;
+      this.showDeleteDialog = true;
+    },
+    async deleteArticleConfirmed() {
+      try {
+        await this.deleteArticle(this.articleToDelete.id);
+        this.toast({ title: "Xóa bài viết thành công!", variant: "success" });
+        // reload list
+        const res = await this.getAllArticles();
+        this.dataPosts = res.data;
+      } catch (e) {
+        this.toast({ title: "Lỗi xóa bài viết!", description: "Không thể xóa bài viết.", variant: "destructive" });
+      } finally {
+        this.showDeleteDialog = false;
+        this.articleToDelete = null;
+      }
+    },
   },
-  created() {},
+  async created() {
+    try {
+      const res = await getAllArticles();
+      this.dataPosts = res.data;
+    } catch (e) {}
+  },
 };
 </script>
 

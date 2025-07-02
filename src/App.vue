@@ -10,49 +10,43 @@
     :style="flyingItemStyle"
     alt="Sản phẩm đang được thêm vào giỏ"
   />
+
+  <Toaster />
 </template>
 
 <script>
-import { computed, ref, onMounted } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import { useCartStore } from "@/stores/cartStore";
+import Toaster from "@/components/ui/toast/Toaster.vue";
 
 export default {
   name: "App",
   components: {
     DefaultLayout,
+    Toaster,
   },
   setup() {
     const route = useRoute();
     const cartStore = useCartStore();
-    const cartIconPosition = ref({ x: 0, y: 0 });
 
     const layout = computed(() => {
-      return route.meta.layout || "DefaultLayout";
+      switch (route.meta.layout) {
+        default:
+          return "DefaultLayout";
+      }
     });
 
-    // Tính toán style động cho phần tử bay
     const flyingItemStyle = computed(() => {
-      const { startPosition } = cartStore;
+      const { startPosition, cartIconPosition } = cartStore;
       return {
+        // Lấy tất cả tọa độ từ store, không truy vấn DOM ở đây
         "--start-x": `${startPosition.x}px`,
         "--start-y": `${startPosition.y}px`,
-        "--end-x": `${cartIconPosition.value.x}px`,
-        "--end-y": `${cartIconPosition.value.y}px`,
+        "--end-x": `${cartIconPosition.x}px`,
+        "--end-y": `${cartIconPosition.y}px`,
       };
-    });
-
-    // Lấy vị trí của icon giỏ hàng khi component được mount
-    onMounted(() => {
-      const cartIconEl = document.querySelector('[ref="cartIcon"]');
-      if (cartIconEl) {
-        const rect = cartIconEl.getBoundingClientRect();
-        cartIconPosition.value = {
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-        };
-      }
     });
 
     return {
@@ -74,6 +68,8 @@ export default {
   object-fit: cover;
   animation: fly 0.8s cubic-bezier(0.5, 0, 1, 0.5) forwards;
   will-change: transform;
+  border: 2px solid white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes fly {

@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-3 sm:px-4 lg:px-8 md:my-5 my-2">
+  <div class="container px-3 sm:px-4 lg:px-8 md:my-5 my-2 py-8">
     <div class="w-full flex flex-col justify-center items-center">
       <h2 class="text-3xl text-primary font-bold">Đăng ký tài khoản</h2>
       <h4 class="my-2">
@@ -71,8 +71,10 @@
         <div class="w-full flex items-center justify-center">
           <button
             type="submit"
-            class="mt-4 px-4 w-1/3 py-2 text-sm font-medium text-white bg-primary border border-transparent rounded-md hover:bg-primary-dark focus:outline-none focus:ring-primary focus:border-primary"
+            class="mt-4 px-4 w-1/3 py-2 text-sm font-medium text-white bg-primary border border-transparent rounded-md hover:bg-primary-dark focus:outline-none focus:ring-primary focus:border-primary flex items-center justify-center"
+            :disabled="loading"
           >
+            <span v-if="loading" class="loader mr-2"></span>
             Đăng ký
           </button>
         </div>
@@ -82,81 +84,105 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from "@/lib/api";
+import { useToast } from "@/components/ui/toast/use-toast";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Register",
-  data() {
-    return {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      errors: {},
-    };
-  },
-  methods: {
-    validateInputs() {
-      this.errors = {};
+  setup() {
+    const { toast } = useToast();
+    const router = useRouter();
+    const firstName = ref("");
+    const lastName = ref("");
+    const email = ref("");
+    const password = ref("");
+    const confirmPassword = ref("");
+    const errors = ref({});
+    const loading = ref(false);
+
+    const validateInputs = () => {
+      errors.value = {};
       let isValid = true;
 
-      if (!this.firstName) {
-        this.errors.firstName = "Họ không được để trống.";
+      if (!firstName.value) {
+        errors.value.firstName = "Họ không được để trống.";
         isValid = false;
       }
 
-      if (!this.lastName) {
-        this.errors.lastName = "Tên không được để trống.";
+      if (!lastName.value) {
+        errors.value.lastName = "Tên không được để trống.";
         isValid = false;
       }
 
-      if (!this.email) {
-        this.errors.email = "Email không được để trống.";
+      if (!email.value) {
+        errors.value.email = "Email không được để trống.";
         isValid = false;
-      } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.email)) {
-        this.errors.email = "Email không hợp lệ.";
-        isValid = false;
-      }
-
-      if (!this.password) {
-        this.errors.password = "Mật khẩu không được để trống.";
-        isValid = false;
-      } else if (this.password.length < 6) {
-        this.errors.password = "Mật khẩu phải dài ít nhất 6 ký tự.";
+      } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email.value)) {
+        errors.value.email = "Email không hợp lệ.";
         isValid = false;
       }
 
-      if (this.password !== this.confirmPassword || !this.confirmPassword) {
-        this.errors.confirmPassword = "Mật khẩu không khớp.";
+      if (!password.value) {
+        errors.value.password = "Mật khẩu không được để trống.";
+        isValid = false;
+      } else if (password.value.length < 6) {
+        errors.value.password = "Mật khẩu phải dài ít nhất 6 ký tự.";
+        isValid = false;
+      }
+
+      if (password.value !== confirmPassword.value || !confirmPassword.value) {
+        errors.value.confirmPassword = "Mật khẩu không khớp.";
         isValid = false;
       }
 
       return isValid;
-    },
+    };
 
-    async handleRegister() {
-      if (!this.validateInputs()) {
-        return;
-      }
-
+    const handleRegister = async () => {
+      if (!validateInputs()) return;
+      loading.value = true;
       try {
-        const response = await axios.post("/api/register", {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.email,
-          password: this.password,
+        const response = await api.post("/auth/register", {
+          name: firstName.value + " " + lastName.value,
+          email: email.value,
+          password: password.value,
         });
-
-        if (response.data.success) {
-          this.$router.push("/login");
+        if (response.data.message?.includes("OTP")) {
+          toast({ title: "Đăng ký thành công!", description: "Vui lòng kiểm tra email để xác thực tài khoản." });
+          router.push({
+            name: "verify-otp",
+            query: { email: email.value, password: password.value, autoResend: false },
+          });
         } else {
-          this.errors.general = response.data.message || "Đăng ký thất bại.";
+          toast({
+            title: "Đăng ký thất bại!",
+            description: response.data.message || "Đăng ký thất bại.",
+            variant: "destructive",
+          });
         }
       } catch (error) {
-        this.errors.general = error.response?.data?.message || "Có lỗi xảy ra khi đăng ký.";
+        toast({
+          title: "Lỗi đăng ký!",
+          description: error.response?.data?.message || "Có lỗi xảy ra khi đăng ký.",
+          variant: "destructive",
+        });
+      } finally {
+        loading.value = false;
       }
-    },
+    };
+
+    return {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      errors,
+      handleRegister,
+      loading,
+    };
   },
 
   watch: {
@@ -179,4 +205,22 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.loader {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

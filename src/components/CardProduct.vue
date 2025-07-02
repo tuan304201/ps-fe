@@ -74,9 +74,9 @@ export default {
       return value.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
     };
 
+    // Hàm addToCart nhận vào event
     const addToCart = (event) => {
       cartStore.flyToCart(props.mainImage, event);
-      console.log("Đã thêm sản phẩm vào giỏ!");
     };
 
     return {

@@ -112,6 +112,9 @@ const fetchPostData = () => {
 
 onMounted(() => {
   fetchPostData();
+  if (post.value && post.value.title) {
+    window.__CURRENT_NEWS_TITLE__ = post.value.title;
+  }
 });
 
 watch(
@@ -121,6 +124,12 @@ watch(
     window.scrollTo(0, 0);
   },
 );
+
+watch(post, (val) => {
+  if (val && val.title) {
+    window.__CURRENT_NEWS_TITLE__ = val.title;
+  }
+});
 </script>
 
 <style scoped>

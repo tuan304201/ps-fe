@@ -1,266 +1,525 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col md:flex-row gap-8">
-      <!-- Product Image Section -->
-      <div class="w-full md:w-2/5">
-        <div class="bg-orange-200 rounded-lg p-6 relative">
-          <div class="flex justify-between items-start">
-            <img src="" alt="Bone icon" class="w-8 h-8" />
-            <div class="flex flex-col items-end">
-              <div class="text-white font-bold text-2xl">DỊCH VỤ</div>
-              <div class="text-white font-bold text-4xl">CẠO CHÓ</div>
-            </div>
+  <div class="bg-white py-8">
+    <div v-if="product" class="container mx-auto px-4">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div>
+          <div class="mb-4 overflow-hidden rounded-lg border">
+            <img :src="activeImage" :alt="product.name" class="h-full w-full object-cover aspect-square" />
           </div>
-
-          <div class="mt-4 flex justify-center">
-            <div class="rounded-full overflow-hidden w-64 h-64 relative">
-              <img src="" alt="Dog grooming" class="w-full h-full object-cover" />
-            </div>
-          </div>
-
-          <div class="mt-8 bg-white rounded-lg p-4">
-            <div class="text-left">
-              <div class="font-bold">1. TẮM CHÓ</div>
-              <div class="font-bold">2. SẤY KHÔ</div>
-              <div class="font-bold">3. CHO LÔNG</div>
-              <div class="font-bold">4. CẮT TỈA</div>
-            </div>
-            <div class="mt-4">
-              <button class="bg-orange-300 text-white font-bold px-6 py-2 rounded-full">ĐẶT LỊCH NGAY</button>
-            </div>
-          </div>
-
-          <div class="absolute bottom-4 left-4">
-            <img src="" alt="Paw icon" class="w-12 h-12 opacity-50" />
-          </div>
-          <div class="absolute top-4 right-4">
-            <img src="" alt="Paw icon" class="w-12 h-12 opacity-50" />
-          </div>
-        </div>
-
-        <div class="mt-4 flex justify-center space-x-2">
-          <button class="p-2 hover:bg-gray-100 rounded">
-            <i class="fab fa-facebook-f text-blue-600"></i>
-          </button>
-          <button class="p-2 hover:bg-gray-100 rounded">
-            <i class="fab fa-pinterest text-red-600"></i>
-          </button>
-          <button class="p-2 hover:bg-gray-100 rounded">
-            <i class="fas fa-share-alt"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Product Details Section -->
-      <div class="w-full md:w-3/5">
-        <h2 class="text-2xl font-bold">Dịch vụ tắm, cạo và cắt tỉ lông cho Chó VIP</h2>
-
-        <div class="flex items-center text-sm mt-2">
-          <span class="text-gray-500">Số lượng</span>
-        </div>
-
-        <div class="flex items-center text-sm mt-2">
-          <span class="text-gray-500">Thương hiệu:</span>
-          <a href="#" class="text-blue-600 ml-2">EGA Pets</a>
-          <span class="ml-2 text-gray-500">Mã sản phẩm: Đang cập nhật</span>
-        </div>
-
-        <div class="bg-red-600 text-white p-3 mt-4 rounded-t-lg">
-          <div class="flex justify-between items-center">
-            <div>Vừa mở bán</div>
-            <div class="flex space-x-1">
-              <div class="bg-white text-black px-2 py-1 rounded">07</div>
-              <div>:</div>
-              <div class="bg-white text-black px-2 py-1 rounded">12</div>
-              <div>:</div>
-              <div class="bg-white text-black px-2 py-1 rounded">23</div>
-            </div>
-          </div>
-          <div class="text-3xl font-bold mt-2">100.000đ</div>
-        </div>
-
-        <div class="bg-green-50 p-4 border border-green-100 rounded-b-lg">
-          <div class="flex items-center">
-            <i class="fas fa-gift text-green-500 mr-2"></i>
-            <span class="font-medium">Quà tặng khuyến mãi</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-            <div class="flex items-start">
-              <span class="mr-2">1.</span>
-              <div>Nhập mã EGANY thêm 5% đơn hàng</div>
-            </div>
-            <div class="flex items-start">
-              <span class="mr-2">2.</span>
-              <div>Giảm giá 10% khi mua từ 5 sản phẩm</div>
-            </div>
-            <div class="flex items-start">
-              <span class="mr-2">3.</span>
-              <div>Giảm giá 10% khi mua từ 5 sản phẩm</div>
-            </div>
-            <div class="flex items-start">
-              <span class="mr-2">4.</span>
-              <div>Tặng phiếu mua hàng khi mua từ 500k</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-6">
-          <div class="flex items-center">
-            <span class="text-gray-600 mr-4">Mã giảm giá</span>
-            <div class="flex space-x-2 overflow-x-auto">
-              <div
-                class="border border-orange-300 rounded px-2 py-1 text-orange-500 text-sm flex items-center whitespace-nowrap"
-              >
-                <i class="fas fa-tag mr-1"></i>
-                EGA50TH...
-              </div>
-              <div
-                class="border border-orange-300 rounded px-2 py-1 text-orange-500 text-sm flex items-center whitespace-nowrap"
-              >
-                <i class="fas fa-tag mr-1"></i>
-                EGA30TH...
-              </div>
-              <div
-                class="border border-orange-300 rounded px-2 py-1 text-orange-500 text-sm flex items-center whitespace-nowrap"
-              >
-                <i class="fas fa-tag mr-1"></i>
-                FREESHIP...
-              </div>
-              <button class="text-gray-400">
-                <i class="fas fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="mt-6">
-            <div class="mb-2 text-gray-600">Cân nặng</div>
-            <div class="flex flex-wrap gap-2">
-              <button
-                class="border border-gray-200 rounded px-4 py-2 text-sm hover:border-orange-500 focus:border-orange-500 focus:outline-none"
-              >
-                &lt; 3kg
-              </button>
-              <button
-                class="border border-gray-200 rounded px-4 py-2 text-sm hover:border-orange-500 focus:border-orange-500 focus:outline-none"
-              >
-                3 - 5kg
-              </button>
-              <button
-                class="border border-gray-200 rounded px-4 py-2 text-sm hover:border-orange-500 focus:border-orange-500 focus:outline-none"
-              >
-                5 - 10kg
-              </button>
-              <button
-                class="border border-gray-200 rounded px-4 py-2 text-sm hover:border-orange-500 focus:border-orange-500 focus:outline-none"
-              >
-                10 - 20kg
-              </button>
-              <button
-                class="border border-gray-200 rounded px-4 py-2 text-sm hover:border-orange-500 focus:border-orange-500 focus:outline-none"
-              >
-                &gt; 20kg
-              </button>
-            </div>
-          </div>
-
-          <div class="mt-6">
-            <div class="mb-2 text-gray-600">Lông</div>
-            <div class="flex flex-wrap gap-2">
-              <button
-                class="border border-gray-200 rounded px-4 py-2 text-sm hover:border-orange-500 focus:border-orange-500 focus:outline-none"
-              >
-                Ngắn
-              </button>
-              <button
-                class="border border-gray-200 rounded px-4 py-2 text-sm hover:border-orange-500 focus:border-orange-500 focus:outline-none"
-              >
-                Dài
-              </button>
-            </div>
-          </div>
-
-          <div class="mt-6">
-            <div class="mb-2 text-gray-600">Ngày đến</div>
-            <div class="w-full">
-              <input
-                type="text"
-                placeholder="Chọn ngày"
-                class="w-full border border-gray-200 rounded px-4 py-2 text-sm"
+          <div class="grid grid-cols-5 gap-2">
+            <button
+              v-for="(image, index) in product.images"
+              :key="index"
+              @click="activeImage = image"
+              class="overflow-hidden rounded-md border-2 transition-all"
+              :class="activeImage === image ? 'border-primary' : 'border-transparent hover:border-primary/50'"
+            >
+              <img
+                :src="image"
+                :alt="`${product.name} - ảnh nhỏ ${index + 1}`"
+                class="h-full w-full object-cover aspect-square"
               />
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">{{ product.name }}</h1>
+          <div class="mt-2 flex items-center text-sm text-gray-500">
+            <span
+              >Thương hiệu: <a href="#" class="font-medium text-primary">{{ product.brand }}</a></span
+            >
+            <span class="mx-2">|</span>
+            <span>Mã sản phẩm: {{ product.sku }}</span>
+          </div>
+
+          <div class="mt-6 rounded-lg bg-rose-50 p-4">
+            <div class="flex items-center justify-between">
+              <span class="text-3xl font-bold text-red-600">{{ formatCurrency(product.price) }}</span>
+              <span class="rounded-md bg-red-600 px-2 py-1 text-sm font-semibold text-white">
+                -{{ Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) }}%
+              </span>
+            </div>
+            <p class="mt-1 text-gray-500">
+              Giá cũ: <span class="line-through">{{ formatCurrency(product.originalPrice) }}</span>
+            </p>
+          </div>
+
+          <div class="mt-6 rounded-lg border border-green-200 bg-green-50 p-4">
+            <h3 class="font-semibold text-green-800">Quà tặng khuyến mãi</h3>
+            <ul class="mt-2 grid grid-cols-1 gap-x-6 gap-y-2 text-sm text-gray-700 sm:grid-cols-2">
+              <li v-for="promo in product.promotions" :key="promo" class="flex items-start">
+                <Icon icon="ph:check-circle-bold" class="mr-2 mt-1 h-4 w-4 shrink-0 text-green-600" />
+                <span>{{ promo }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-6">
+            <h4 class="font-semibold text-gray-700">Kích thước:</h4>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <button
+                v-for="size in product.sizes"
+                :key="size"
+                @click="selectedSize = size"
+                class="rounded-lg border px-5 py-2 text-sm font-medium transition-colors"
+                :class="selectedSize === size ? 'border-primary bg-primary text-white' : 'hover:border-primary/50'"
+              >
+                {{ size }}
+              </button>
             </div>
           </div>
 
           <div class="mt-6">
-            <div class="mb-2 text-gray-600">Số lượng</div>
-            <div class="flex items-center">
-              <button class="border border-gray-200 rounded-l px-3 py-1 text-gray-600 hover:bg-gray-100">
-                <i class="fas fa-minus"></i>
+            <h4 class="font-semibold text-gray-700">Số lượng:</h4>
+            <div class="mt-2 flex items-center border rounded-lg w-fit">
+              <button @click="quantity = Math.max(1, quantity - 1)" class="p-3 hover:bg-gray-100 rounded-l-lg">
+                <Icon icon="ph:minus" class="w-4 h-4" />
               </button>
-              <input type="text" value="1" class="border-t border-b border-gray-200 w-12 text-center py-1" />
-              <button class="border border-gray-200 rounded-r px-3 py-1 text-gray-600 hover:bg-gray-100">
-                <i class="fas fa-plus"></i>
+              <span class="w-12 text-center text-lg font-medium">{{ quantity }}</span>
+              <button @click="quantity++" class="p-3 hover:bg-gray-100 rounded-r-lg">
+                <Icon icon="ph:plus" class="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          <div class="mt-6 flex flex-col sm:flex-row gap-4">
-            <button
-              class="bg-white border border-orange-500 text-orange-500 font-medium rounded-full px-6 py-3 hover:bg-orange-50 flex-1 text-center"
-            >
-              Mua ngay
-            </button>
-            <button
-              class="bg-orange-500 text-white font-medium rounded-full px-6 py-3 hover:bg-orange-600 flex-1 text-center"
-            >
-              Thêm vào giỏ
-            </button>
-          </div>
-
-          <div class="mt-6 space-y-3">
-            <div class="flex items-center">
-              <i class="fas fa-truck text-gray-400 mr-2"></i>
-              <span class="text-gray-600 text-sm">Giao hàng miễn phí trong 24h (chỉ áp dụng khu vực nội thành)</span>
+          <div class="mt-8 space-y-3">
+            <div class="flex gap-2 justify-between items-center">
+              <button
+                class="w-full rounded-lg bg-primary px-8 py-3 text-base font-semibold text-white transition-opacity hover:opacity-90 shadow-md"
+              >
+                Mua ngay
+              </button>
+              <button
+                class="w-full rounded-lg border-2 border-primary bg-white px-8 py-3 text-base font-semibold text-primary transition-colors hover:bg-primary/5 shadow-md"
+              >
+                Thêm vào giỏ
+              </button>
             </div>
-            <div class="flex items-center">
-              <i class="fas fa-credit-card text-gray-400 mr-2"></i>
-              <span class="text-gray-600 text-sm">Trả góp lãi suất 0% qua thẻ tín dụng Visa, Master, JCB</span>
-            </div>
-            <div class="flex items-center">
-              <i class="fas fa-undo text-gray-400 mr-2"></i>
-              <span class="text-gray-600 text-sm">Đổi trả miễn phí trong 30 ngày</span>
+            <div class="text-sm text-gray-500 space-y-1">
+              <p>
+                <Icon icon="ph:truck-bold" class="inline-block mr-1 align-middle" /> Giao hàng miễn phí trong 24h (chỉ
+                áp dụng khu vực nội thành)
+              </p>
+              <p>
+                <Icon icon="ph:credit-card-bold" class="inline-block mr-1 align-middle" /> Trả góp lãi suất 0% qua thẻ
+                tín dụng Visa, Master, JCB
+              </p>
+              <p>
+                <Icon icon="ph:arrow-counter-clockwise-bold" class="inline-block mr-1 align-middle" /> Đổi trả miễn phí
+                trong 30 ngày
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Additional Information Section -->
-    <div class="mt-12">
-      <div class="border-b border-gray-200">
-        <div class="flex">
-          <button class="py-2 px-4 border-b-2 border-orange-500 font-medium text-orange-500">Đặc điểm nổi bật</button>
-          <button class="py-2 px-4 text-gray-500 hover:text-gray-700">Đánh giá sản phẩm</button>
-        </div>
+      <div class="mt-12">
+        <Tabs default-value="features" class="w-full">
+          <TabsList class="border-b justify-start rounded-none bg-transparent p-0">
+            <TabsTrigger
+              value="features"
+              class="relative rounded-none border-b-2 border-transparent bg-transparent px-4 py-3 font-semibold text-gray-500 shadow-none transition-none data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-none"
+            >
+              Đặc điểm nổi bật
+            </TabsTrigger>
+            <TabsTrigger
+              value="reviews"
+              class="relative rounded-none border-b-2 border-transparent bg-transparent px-4 py-3 font-semibold text-gray-500 shadow-none transition-none data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-none"
+            >
+              Đánh giá sản phẩm
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="features" class="mt-6 prose max-w-none">
+            <p>{{ product.description }}</p>
+            <ul class="list-disc pl-5">
+              <li>Ngăn ngừa lông vón cục trong ruột mèo.</li>
+              <li>Hàm lượng dinh dưỡng cân bằng, phù hợp mọi lứa tuổi.</li>
+              <li>Sử dụng protein cao cấp, tốt cho hệ tiêu hóa.</li>
+              <li>Không chất bảo quản, không kháng sinh, không màu nhân tạo.</li>
+            </ul>
+          </TabsContent>
+          <TabsContent value="reviews" class="mt-6">
+            <!-- Tổng quan đánh giá -->
+            <div v-if="reviews.length" class="mb-8 p-4 rounded-lg border bg-gray-50">
+              <div class="flex flex-col md:flex-row md:items-center md:gap-8 gap-4">
+                <div class="flex flex-col items-center justify-center min-w-[120px]">
+                  <div class="flex items-center gap-1">
+                    <span class="text-4xl font-bold text-yellow-500">{{ averageRating }}</span>
+                    <Icon icon="ph:star-fill" class="w-7 h-7 text-yellow-500" />
+                  </div>
+                  <div class="text-gray-600 text-sm mt-1">Trung bình trên {{ totalReviews }} đánh giá</div>
+                </div>
+                <div class="flex-1 w-full">
+                  <div
+                    v-for="i in 5"
+                    :key="i"
+                    class="flex items-center gap-2 mb-1 cursor-pointer select-none"
+                    @click="filterRating = 6 - i"
+                  >
+                    <span
+                      :class="[
+                        'w-8 text-sm flex items-center gap-0.5',
+                        filterRating === 6 - i ? 'text-primary font-bold' : 'text-gray-700',
+                      ]"
+                    >
+                      {{ 6 - i }} <Icon icon="ph:star-fill" class="inline-block text-yellow-500 w-4 h-4" />
+                    </span>
+                    <div class="flex-1 h-3 rounded bg-gray-200 overflow-hidden">
+                      <div
+                        class="h-full rounded bg-primary transition-all"
+                        :style="{ width: (((ratingBreakdown[6 - i] || 0) / totalReviews) * 100 || 0) + '%' }"
+                      ></div>
+                    </div>
+                    <span class="w-6 text-xs text-gray-500 text-right">{{ ratingBreakdown[6 - i] || 0 }}</span>
+                  </div>
+                  <button v-if="filterRating" @click="filterRating = null" class="mt-2 text-xs text-primary underline">
+                    Xóa lọc
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- End Tổng quan đánh giá -->
+            <div v-if="filteredReviews.length > 0" class="space-y-6">
+              <div v-for="review in filteredReviews" :key="review.id" class="border rounded-md p-4">
+                <div class="flex items-center mb-2">
+                  <span class="font-semibold text-gray-800">{{ review.author }}</span>
+                  <span class="ml-2 text-gray-500 text-sm">({{ formatDate(review.date) }})</span>
+                </div>
+                <div class="flex items-center mb-2">
+                  <template v-for="i in 5" :key="i">
+                    <Icon
+                      icon="ph:star-fill"
+                      :class="i <= review.rating ? 'text-yellow-500' : 'text-gray-300'"
+                      class="h-4 w-4 mr-1"
+                    />
+                  </template>
+                </div>
+                <p class="text-gray-700">{{ review.comment }}</p>
+
+                <div v-if="review.media?.length" class="mt-2 grid grid-cols-3 gap-2">
+                  <div
+                    v-for="(file, index) in review.media"
+                    :key="index"
+                    class="rounded-md overflow-hidden border group relative"
+                  >
+                    <img
+                      v-if="file.type.startsWith('image/')"
+                      :src="file.previewUrl"
+                      class="w-full h-24 object-cover group-hover:scale-105 transition"
+                    />
+                    <video
+                      v-else-if="file.type.startsWith('video/')"
+                      :src="file.previewUrl"
+                      controls
+                      class="w-full h-24 object-cover bg-black"
+                    ></video>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-else class="text-gray-500">
+              Chưa có đánh giá nào cho sản phẩm này. Hãy là người đầu tiên đánh giá!
+            </div>
+            <Dialog v-model:open="isDialogOpen">
+              <DialogTrigger as-child class="w-full flex justify-center">
+                <Button variant="link" class="mt-4 text-primary font-semibold hover:underline p-0 h-auto">
+                  Viết đánh giá của bạn
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogTitle>Viết đánh giá của bạn</DialogTitle>
+                <form @submit.prevent="submitReview" class="space-y-4">
+                  <div>
+                    <Label for="review-author">Tên của bạn</Label>
+                    <Input id="review-author" v-model="reviewForm.author" required />
+                  </div>
+                  <div>
+                    <Label>Đánh giá</Label>
+                    <div class="flex items-center gap-1">
+                      <span v-for="i in 5" :key="i" @click="reviewForm.rating = i" class="cursor-pointer">
+                        <Icon
+                          icon="ph:star-fill"
+                          :class="i <= reviewForm.rating ? 'text-yellow-500' : 'text-gray-300'"
+                          class="h-6 w-6"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <Label for="review-comment">Nhận xét</Label>
+                    <textarea
+                      id="review-comment"
+                      v-model="reviewForm.comment"
+                      required
+                      class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-primary/50"
+                      style="resize: none"
+                    />
+                  </div>
+                  <div>
+                    <Label for="review-media">Hình ảnh / Video</Label>
+                    <div class="flex flex-col gap-2">
+                      <label
+                        for="review-media"
+                        class="flex items-center justify-center gap-2 border-2 border-dashed border-primary/40 rounded-lg px-4 py-3 cursor-pointer hover:bg-primary/5 transition"
+                      >
+                        <Icon icon="ph:image-bold" class="text-primary w-6 h-6" />
+                        <span class="text-primary font-medium">Chọn hình ảnh hoặc video</span>
+                      </label>
+                      <input
+                        id="review-media"
+                        type="file"
+                        multiple
+                        accept="image/*,video/*"
+                        @change="handleMediaUpload"
+                        class="hidden"
+                      />
+                      <div v-if="reviewMedia.length" class="grid grid-cols-3 gap-2 mt-2">
+                        <div
+                          v-for="(file, idx) in reviewMedia"
+                          :key="idx"
+                          class="relative group rounded-md overflow-hidden border"
+                        >
+                          <img
+                            v-if="file.type.startsWith('image/')"
+                            :src="file.previewUrl"
+                            class="w-full h-20 object-cover"
+                          />
+                          <video
+                            v-else-if="file.type.startsWith('video/')"
+                            :src="file.previewUrl"
+                            class="w-full h-20 object-cover bg-black"
+                            muted
+                          />
+                          <button
+                            type="button"
+                            @click="removeMedia(idx)"
+                            class="absolute top-1 right-1 bg-white/80 rounded-full p-1 text-red-500 hover:bg-white"
+                            title="Xóa"
+                          >
+                            <Icon icon="ph:x-bold" class="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button type="submit">Gửi đánh giá</Button>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </TabsContent>
+        </Tabs>
       </div>
-
-      <div class="mt-6">
-        <p class="text-gray-600 mb-4">
-          Dịch vụ tắm spa cho chó mèo EGA Pets với nhiều chi nhánh của hãng tại Hà Nội, TPHCM và Đà Nẵng tại đây cung
-          cấp phương pháp chăm sóc thú cưng toàn diện từ A đến Z.
-        </p>
-        <p class="text-gray-600">
-          <strong>Trọn gói bao gồm:</strong> tắm, vắt tuyến hôi, sấy khô, chải lông rối, nhổ lông tai, vệ sinh tai, cắt
-          mài móng chân, cạo lông theo yêu cầu. Tất cả đều với mong muốn mang tới cho thú cưng của bạn một cuộc sống
-          khỏe mạnh và hạnh phúc nhất.
-        </p>
+      <!-- Related Products Section -->
+      <div class="mt-16">
+        <h2 class="text-2xl font-bold mb-6 text-primary text-center">Sản phẩm liên quan</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <CardProduct
+            v-for="item in relatedProducts"
+            :key="item.id"
+            :id="item.id"
+            :title="item.name"
+            :price="item.price"
+            :oldPrice="item.oldPrice"
+            :discount="item.discount"
+            :mainImage="item.mainImage"
+            :hoverImage="item.hoverImage"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
+import { Icon } from "@iconify/vue";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import CardProduct from "@/components/CardProduct.vue";
+import { dataAllProduct } from "@/utils/FakeData";
 
-// You can add any necessary reactive data or methods here
+// Sample Product Data
+const product = ref({
+  id: 1,
+  name: "Hạt Cho Mèo Mọi Lứa Tuổi Catsrang",
+  brand: "Catsrang",
+  sku: "CR2131000TC",
+  price: 85000,
+  originalPrice: 90000,
+  images: [
+    "https://bizweb.dktcdn.net/100/527/383/products/1-8975a5e3-c242-4f05-b827-0b5c13b7e61b.jpg",
+    "https://bizweb.dktcdn.net/100/527/383/products/5-0d418904-4530-4e5a-9426-3d60678f9de6.jpg",
+    "https://bizweb.dktcdn.net/100/527/383/products/6-13d80e81-2292-411a-8280-92892973e440.jpg",
+    "https://bizweb.dktcdn.net/100/527/383/products/7-230d0758-2ed3-424a-89a3-5c05c3bd1788.jpg",
+    "https://bizweb.dktcdn.net/100/527/383/products/8-f14d86c4-b903-4c9f-ab51-6c2e71d371d3.jpg",
+  ],
+  promotions: [
+    "Nhập mã EGANY thêm 5% đơn hàng",
+    "Giảm giá 10% khi mua từ 2 sản phẩm",
+    "Giảm giá 10% khi mua từ 5 sản phẩm",
+    "Tặng phiếu mua hàng khi mua từ 500K",
+  ],
+  sizes: ["Túi Chia 1kg", "3kg", "5kg"],
+  description:
+    "Với đặc tính dễ tiêu, hạt Catsrang giúp mèo đi phân rắn và giảm thiểu mùi hôi khó chịu. Ngăn ngừa lông vón cục trong ruột mèo. Hàm lượng dinh dưỡng cân bằng, Catsrang phù hợp trong việc cải thiện da lông, phòng tránh bệnh quáng gà ở mèo. Sử dụng protein cao cấp tốt cho hệ tiêu hóa. Đặc biệt, sản phẩm không sử dụng chất bảo quản, chất kháng sinh, phẩm màu hay hương liệu nhân tạo khác.",
+});
+
+const activeImage = ref(product.value.images?.[0]);
+const selectedSize = ref(product.value.sizes?.[0]);
+const quantity = ref(1);
+const isDialogOpen = ref(false);
+
+const formatCurrency = (value) => {
+  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(value);
+};
+
+// Fake Reviews Data
+const reviews = ref([
+  {
+    id: 1,
+    author: "Minh Anh",
+    rating: 5,
+    comment: "Sản phẩm chất lượng tốt, mèo nhà mình rất thích ăn.",
+    date: "2023-10-26",
+  },
+  {
+    id: 2,
+    author: "Hoàng Nam",
+    rating: 4,
+    comment: "Giá cả hợp lý, giao hàng nhanh chóng.",
+    date: "2023-11-15",
+  },
+  {
+    id: 3,
+    author: "Thùy Dung",
+    rating: 5,
+    comment: "Mèo kén ăn của mình cũng mê món này!",
+    date: "2023-12-01",
+  },
+]);
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  return date.toLocaleDateString("vi-VN", options);
+};
+
+const reviewForm = ref({
+  author: "",
+  rating: 0,
+  comment: "",
+});
+
+const reviewMedia = ref([]);
+
+function handleMediaUpload(e) {
+  const files = Array.from(e.target.files);
+  reviewMedia.value.push(
+    ...files.map((file) => ({
+      file,
+      type: file.type,
+      previewUrl: URL.createObjectURL(file),
+    })),
+  );
+}
+
+function removeMedia(idx) {
+  // Thu hồi URL khi xóa
+  if (reviewMedia.value[idx] && reviewMedia.value[idx].previewUrl) {
+    URL.revokeObjectURL(reviewMedia.value[idx].previewUrl);
+  }
+  reviewMedia.value.splice(idx, 1);
+}
+
+function submitReview() {
+  if (!reviewForm.value.author || !reviewForm.value.rating || !reviewForm.value.comment) return;
+  reviews.value.unshift({
+    id: Date.now(),
+    author: reviewForm.value.author,
+    rating: reviewForm.value.rating,
+    comment: reviewForm.value.comment,
+    date: new Date().toISOString().slice(0, 10),
+    media: reviewMedia.value.map((m) => ({ type: m.type, previewUrl: m.previewUrl })),
+  });
+  // Thu hồi URL khi submit xong
+  reviewMedia.value.forEach((m) => m.previewUrl && URL.revokeObjectURL(m.previewUrl));
+  reviewForm.value = { author: "", rating: 0, comment: "" };
+  reviewMedia.value = [];
+  isDialogOpen.value = false;
+}
+
+const relatedProducts = computed(() => {
+  return dataAllProduct.filter((p) => p.id !== product.value.id).slice(0, 4);
+});
+
+const averageRating = computed(() => {
+  if (!reviews.value.length) return 0;
+  const sum = reviews.value.reduce((acc, r) => acc + (r.rating || 0), 0);
+  return (sum / reviews.value.length).toFixed(1);
+});
+const totalReviews = computed(() => reviews.value.length);
+const ratingBreakdown = computed(() => {
+  const breakdown = {};
+  for (let i = 1; i <= 5; i++) breakdown[i] = 0;
+  reviews.value.forEach((r) => {
+    if (r.rating && breakdown[r.rating] !== undefined) breakdown[r.rating]++;
+  });
+  return breakdown;
+});
+
+const filterRating = ref(null);
+const filteredReviews = computed(() => {
+  if (!filterRating.value) return reviews.value;
+  return reviews.value.filter((r) => r.rating === filterRating.value);
+});
+
+onMounted(() => {
+  if (product.value && product.value.name) {
+    window.__CURRENT_PRODUCT_NAME__ = product.value.name;
+  }
+});
+watch(product, (val) => {
+  if (val && val.name) {
+    window.__CURRENT_PRODUCT_NAME__ = val.name;
+  }
+});
 </script>
+
+<style scoped>
+.prose {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.prose p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: hsl(var(--foreground));
+}
+.prose ul,
+.prose ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+.prose li {
+  color: hsl(var(--foreground));
+}
+</style>
