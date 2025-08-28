@@ -116,3 +116,19 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #999999;
 }
+
+.dp__action_buttons .dp__action_select {
+  background-color: hsl(var(--primary)) !important;
+}
+
+.dp__action_cancel:hover,
+.dp__today {
+  border-color: hsl(var(--primary)) !important;
+}
+
+.dp__range_end,
+.dp__range_start,
+.dp__active_date,
+.dp__overlay_cell_active {
+  background-color: hsl(var(--primary)) !important;
+}

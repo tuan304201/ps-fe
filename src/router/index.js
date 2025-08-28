@@ -9,7 +9,6 @@ const router = createRouter({
       component: () => import("@/views/Home.vue"),
       meta: {
         layout: "default",
-        breadcrumb: "Trang chủ",
         title: "Pet Shop - Cửa hàng thú cưng",
         description: "Trang chủ của Pet Shop, nơi cung cấp các sản phẩm và dịch vụ tốt nhất cho thú cưng của bạn.",
       },
@@ -20,7 +19,6 @@ const router = createRouter({
       component: () => import("@/views/Login.vue"),
       meta: {
         layout: "default",
-        breadcrumb: "Đăng nhập",
         title: "Đăng nhập - Pet Shop",
         description: "Đăng nhập vào tài khoản Pet Shop của bạn để mua sắm và theo dõi đơn hàng.",
       },
@@ -31,7 +29,6 @@ const router = createRouter({
       component: () => import("@/views/Register.vue"),
       meta: {
         layout: "default",
-        breadcrumb: "Đăng ký",
         title: "Đăng ký - Pet Shop",
         description: "Tạo tài khoản mới tại Pet Shop để trải nghiệm mua sắm và dịch vụ thú cưng tốt nhất.",
       },
@@ -42,7 +39,6 @@ const router = createRouter({
       component: () => import("@/views/ForgotPassword.vue"),
       meta: {
         layout: "default",
-        breadcrumb: "Quên mật khẩu",
         title: "Quên mật khẩu - Pet Shop",
         description: "Khôi phục mật khẩu tài khoản Pet Shop của bạn một cách nhanh chóng và an toàn.",
       },
@@ -107,7 +103,7 @@ const router = createRouter({
       component: () => import("@/views/Product.vue"),
       meta: {
         layout: "default",
-        breadcrumb: "Sản phẩm / :id",
+        breadcrumb: "Sản phẩm",
         title: "Sản phẩm - Pet Shop",
         description: "Khám phá các sản phẩm chất lượng dành cho thú cưng tại Pet Shop.",
       },

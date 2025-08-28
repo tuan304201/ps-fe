@@ -50,33 +50,51 @@
                       class="text-gray-700 size-8 border-[1px] border-gray-300 rounded"
                     />
                     <div class="hidden md:block">
-                      <div class="text-md text-black font-semibold max-w-[10rem] truncate">{{ userName }}</div>
+                      <div class="text-md text-black font-semibold max-w-[10rem] truncate">{{ userStore.name }}</div>
                     </div>
                   </div>
                 </PopoverTrigger>
-                <PopoverContent align="left">
-                  <ul class="flex flex-col justify-start py-2">
-                    <RouterLink
-                      to="/account"
-                      class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
-                    >
-                      <Icon icon="material-symbols-light:account-box-outline" class="size-6" />
-                      <span>Tài khoản</span>
-                    </RouterLink>
-                    <RouterLink to="/purchase">
-                      <li
-                        class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
+                <PopoverContent align="center" class="w-56 p-2">
+                  <div class="flex items-center gap-3 p-2">
+                    <Icon
+                      icon="material-symbols-light:person"
+                      class="size-10 rounded-full border bg-gray-50 p-1.5 text-gray-700"
+                    />
+                    <div>
+                      <div class="font-semibold">{{ userStore.name }}</div>
+                      <div class="text-xs text-gray-500">{{ userStore.email }}</div>
+                    </div>
+                  </div>
+
+                  <div class="my-2 h-px bg-gray-100"></div>
+
+                  <ul class="flex flex-col gap-1">
+                    <li>
+                      <RouterLink
+                        to="/purchase"
+                        class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-primary hover:text-white"
                       >
-                        <Icon icon="material-symbols-light:box-outline-rounded" class="size-6" />
+                        <Icon icon="material-symbols-light:box-outline-rounded" class="size-5" />
                         <span>Đơn mua</span>
-                      </li>
-                    </RouterLink>
-                    <li
-                      @click="handleLogout"
-                      class="hover:bg-primary hover:text-white transition-all w-[160px] pl-2 py-2 flex items-center gap-2"
-                    >
-                      <Icon icon="uit:signout" class="size-6" />
-                      <span>Đăng xuất</span>
+                      </RouterLink>
+                    </li>
+                    <li>
+                      <RouterLink
+                        to="/account"
+                        class="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-primary hover:text-white"
+                      >
+                        <Icon icon="material-symbols-light:account-box-outline" class="size-5" />
+                        <span>Thông tin tài khoản</span>
+                      </RouterLink>
+                    </li>
+                    <li>
+                      <button
+                        class="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-red-500 transition-colors hover:bg-red-500 hover:text-white"
+                        @click="handleLogout"
+                      >
+                        <Icon icon="uit:signout" class="size-5" />
+                        <span>Đăng xuất</span>
+                      </button>
                     </li>
                   </ul>
                 </PopoverContent>
@@ -119,14 +137,17 @@
 </template>
 
 <script>
-import { ref, onMounted, nextTick, watch } from "vue";
+import { ref, onMounted, nextTick, watch, computed } from "vue";
 import { useCartStore } from "@/stores/cartStore";
+import { useUserStore } from "@/stores/userStore";
 import { Icon } from "@iconify/vue";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import NavigationMenu from "./NavigationMenu.vue";
 import Sidebar from "./Sidebar.vue";
 import { useRouter } from "vue-router";
+import { useToast } from "@/components/ui/toast/use-toast";
+import { logout } from "@/api/userApi";
 export default {
   components: {
     NavigationMenu,
@@ -145,23 +166,30 @@ export default {
   setup() {
     const router = useRouter();
     const cartStore = useCartStore();
+    const userStore = useUserStore();
+    const { toast } = useToast();
     const cartIconRef = ref(null);
-    const userName = ref("");
-    const isLoggedIn = ref(false);
+    const loading = ref(false);
+    // Đăng nhập: kiểm tra accessToken hoặc userStore.name
+    const isLoggedIn = computed(() => !!localStorage.getItem("accessToken"));
 
-    function handleLogout() {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("userName");
-      isLoggedIn.value = false;
-      userName.value = "";
-      router.push("/login");
-    }
-
-    function checkLogin() {
-      const token = localStorage.getItem("accessToken");
-      const name = localStorage.getItem("userName");
-      isLoggedIn.value = !!token;
-      userName.value = name || "";
+    async function handleLogout() {
+      loading.value = true;
+      try {
+        await logout();
+        localStorage.removeItem("accessToken");
+        cartStore.clearCart();
+        toast({ title: "Đăng xuất thành công!" });
+        router.push("/login");
+      } catch (e) {
+        toast({
+          title: "Lỗi đăng xuất!",
+          description: e.response?.data?.message || "Có lỗi xảy ra khi đăng xuất!",
+          variant: "destructive",
+        });
+      } finally {
+        loading.value = false;
+      }
     }
 
     onMounted(() => {
@@ -174,8 +202,6 @@ export default {
           });
         }
       });
-      checkLogin();
-      window.addEventListener("storage", checkLogin);
       if (isLoggedIn.value) {
         cartStore.fetchCart();
       }
@@ -190,8 +216,8 @@ export default {
       cartStore,
       cartIconRef,
       handleLogout,
-      userName,
       isLoggedIn,
+      userStore,
     };
   },
 };

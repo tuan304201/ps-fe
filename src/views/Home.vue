@@ -33,7 +33,16 @@
     </section>
     <section class="pt-10">
       <div class="mb-8 text-center md:mb-12">
-        <h2 class="relative text-3xl font-bold text-gray-800">Mã giảm giá độc quyền</h2>
+        <div class="text-3xl font-bold flex justify-center mt-10">
+          <h2 class="relative text-primary">
+            Mã giảm giá độc quyền
+            <img
+              src="@/assets/images/coll_title_ic.webp"
+              alt="coll_title_ic"
+              class="absolute -top-4 -right-10 hidden md:block"
+            />
+          </h2>
+        </div>
 
         <p class="mx-auto mt-2 max-w-xl text-gray-600">Sử dụng ngay những mã coupon giá trị này trước khi hết hạn!</p>
       </div>

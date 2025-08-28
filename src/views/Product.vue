@@ -108,6 +108,7 @@ import { getAllProducts } from "@/api/productApi";
 import CardProduct from "@/components/CardProduct.vue";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { ref } from "vue";
 
 export default {
@@ -127,6 +128,7 @@ export default {
     DialogHeader,
     DialogTitle,
     DialogFooter,
+    Button,
   },
   setup() {
     const { toast } = useToast();

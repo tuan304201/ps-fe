@@ -25,15 +25,31 @@
         </div>
 
         <div class="mb-4">
-          <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
-          <input
-            type="password"
-            id="password"
-            class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-            placeholder="Nhập mật khẩu"
-            v-model="password"
-          />
-          <span v-if="errors.password" class="text-red-500 text-xs">{{ errors.password }}</span>
+          <label for="password" class="relative text-sm font-medium text-gray-700"> Mật khẩu </label>
+          <div class="relative">
+            <input
+              :type="isShowPassword ? 'text' : 'password'"
+              id="password"
+              class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+              placeholder="Nhập mật khẩu"
+              v-model="password"
+            />
+
+            <Eye
+              v-if="!isShowPassword"
+              class="absolute right-2 top-2 size-5 text-gray-500 cursor-pointer"
+              @click="togglePassword"
+            />
+            <EyeClosed
+              v-if="isShowPassword"
+              class="absolute right-2 top-2 size-5 text-gray-500 cursor-pointer"
+              @click="togglePassword"
+            />
+          </div>
+
+          <span v-if="errors.password" class="text-red-500 text-xs">
+            {{ errors.password }}
+          </span>
         </div>
 
         <div class="flex justify-between items-center">
@@ -76,11 +92,13 @@ import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import api from "@/lib/api";
 import { useToast } from "@/components/ui/toast/use-toast";
+import { Eye, EyeClosed } from "lucide-vue-next";
 
 const router = useRouter();
 const email = ref("");
 const password = ref("");
 const rememberMe = ref(false);
+const isShowPassword = ref(false);
 const errors = ref({});
 const loading = ref(false);
 const { toast } = useToast();
@@ -168,6 +186,10 @@ const handleLogin = async () => {
   } finally {
     loading.value = false;
   }
+};
+
+const togglePassword = () => {
+  isShowPassword.value = !isShowPassword.value;
 };
 </script>
 

@@ -7,6 +7,7 @@
         $route.name !== 'verify-otp' &&
         $route.name !== 'login' &&
         $route.name !== 'register' &&
+        $route.name !== 'forgot-password' &&
         breadcrumbs.length
       "
       :crumbs="breadcrumbs"
